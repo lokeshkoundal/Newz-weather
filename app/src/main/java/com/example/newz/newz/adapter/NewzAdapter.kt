@@ -39,13 +39,17 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
             holder.title.text = currentItem.title
             holder.metaa.text = currentItem.publishedAt
             holder.description.text = currentItem.description
-            holder.author.text = currentItem.author
+            holder.author.text = "~" + currentItem.author
 
             Glide.with(context) // or use 'this' if inside an Activity, 'requireContext()' in a Fragment
                 .load(currentItem.urlToImage)
                 .placeholder(R.drawable.baseline_replay_24) // Optional: add a placeholder while loading
                 .error(R.drawable.ic_error) // Optional: add an error image in case of failure
                 .into(holder.imageView)
+        }
+
+        holder.bookmarkToggle.setOnClickListener {
+            it.isSelected = !it.isSelected
         }
 
         holder.readMore.setOnClickListener(){
@@ -60,6 +64,7 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
         val description : TextView = itemView.findViewById(R.id.articleDescription)
         val readMore : TextView = itemView.findViewById(R.id.readMoreButton)
         val author :TextView = itemView.findViewById(R.id.author)
+        val bookmarkToggle:ImageView = itemView.findViewById(R.id.bookmark)
 
     }
 }

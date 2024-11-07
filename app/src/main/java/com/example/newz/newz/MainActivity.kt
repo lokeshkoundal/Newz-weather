@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         var adapter : NewsAdapter? = null
 
         lifecycleScope.launch {
-            vm.getTopHeadlines("us","business")
+            vm.getTopHeadlines("us")
         }
-        nextBtn = findViewById(R.id.nextBtn)
+      //  nextBtn = findViewById(R.id.nextBtn)
         recyclerView = findViewById(R.id.recyclerView)
 
         adapter = NewsAdapter(vm.articles,this)
@@ -39,10 +39,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        nextBtn.setOnClickListener{
-           val intent = Intent(this, MainNotesActivity::class.java)
-            startActivity(intent)
-        }
+//        nextBtn.setOnClickListener{
+//           val intent = Intent(this, MainNotesActivity::class.java)
+//            startActivity(intent)
+//        }
 
         vm.articles.observe(this) {
             newsData = it
