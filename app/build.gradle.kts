@@ -45,6 +45,7 @@ dependencies {
     implementation (libs.glide)
 
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.swiperefreshlayout)
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.symbol.processing.api)
 

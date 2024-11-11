@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Newz</string>
-    <string name="taaza_khabarr">Taaza Khabarr</string>
+    <string name="taaza_khabarr">Short Newz</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="boomarked_news">Boomarked News</string>
+    <string name="kt_para">Kotlin is a modern, statically-typed programming language that runs on the Java Virtual Machine (JVM) and is fully interoperable with Java. Developed by JetBrains, Kotlin was first released in 2011 and has since gained popularity, especially in Android development, where it is now the preferred language supported by Google. Its concise syntax, combined with the power of a modern language, makes Kotlin a strong choice for developers looking to improve productivity and reduce common programming errors.\n\n
+
+One of Kotlin’s main attractions is its concise and expressive syntax. Unlike Java, which can require verbose code, Kotlin simplifies many common coding patterns, allowing developers to accomplish more with fewer lines of code. For example, Kotlin’s type inference reduces the need for explicit type declarations, and null safety is built into the language, reducing the likelihood of null pointer exceptions—one of the most common errors in Java.\n\n
+
+Kotlin supports both object-oriented and functional programming paradigms, making it versatile for different coding styles. It introduces several powerful features, such as extension functions, which let you add new functions to existing classes without modifying their source code. This feature is helpful for making code more readable and modular. Additionally, Kotlin’s data classes make it easy to create classes that are primarily used to hold data, with built-in methods like toString(), equals(), and copy() provided automatically.\n\n
+
+For Android developers, Kotlin offers a streamlined development experience with features such as coroutines for asynchronous programming. Coroutines allow for writing asynchronous code that is easier to read and maintain compared to traditional callback-based approaches. This makes tasks like network calls, which can block the main thread in Android, more manageable and reduces the risk of application crashes due to thread management issues.\n\n
+
+Kotlin’s seamless interoperability with Java allows developers to gradually adopt Kotlin in existing Java projects. Kotlin code can call Java code and vice versa, allowing for a smooth migration without the need to rewrite entire projects. The compatibility extends to all Java libraries and frameworks, which can be directly used in Kotlin projects.
+
+In summary, Kotlin is a powerful, versatile language that offers significant advantages for modern development. Its expressive syntax, null safety, and support for asynchronous programming make it an attractive option for Android and JVM-based applications. Its growing ecosystem and strong community support suggest that Kotlin will continue to be a valuable tool for developers in years to come.</string>
+
+
 </resources>
