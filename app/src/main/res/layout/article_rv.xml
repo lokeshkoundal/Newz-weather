@@ -12,7 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:padding="16dp">
 
         <!-- ImageView for article image -->
@@ -36,6 +35,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="@string/app_name"
+            android:layout_marginTop="6dp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="12 OCT 2003 22:56:09"
+            android:layout_marginTop="6dp"
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="author"
+            android:layout_marginTop="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/articleImage" />
 

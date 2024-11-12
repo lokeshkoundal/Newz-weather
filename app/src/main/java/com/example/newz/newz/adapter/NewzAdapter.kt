@@ -2,6 +2,8 @@ package com.example.newz.newz.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.newz.R
 import com.example.newz.newz.ReadMoreActivity
 import com.example.newz.newz.models.NewsModel
+import java.io.ByteArrayOutputStream
 
 class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
@@ -42,14 +45,16 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
             holder.title.text = currentItem.title
             holder.metaa.text = currentItem.publishedAt
             holder.description.text = currentItem.description
-            holder.author.text = "~" + currentItem.author
+            holder.author.text = "~ " + currentItem.author
 
             Glide.with(context) // or use 'this' if inside an Activity, 'requireContext()' in a Fragment
                 .load(currentItem.urlToImage)
                 .placeholder(R.drawable.baseline_replay_24) // Optional: add a placeholder while loading
                 .error(R.drawable.ic_error) // Optional: add an error image in case of failure
                 .into(holder.imageView)
+
         }
+
 
         holder.bookmarkToggle.setOnClickListener {
             it.isSelected = !it.isSelected
@@ -59,6 +64,9 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
             val intent:Intent = Intent(context, ReadMoreActivity::class.java)
             intent.putExtra("title", currentItem?.title)
             intent.putExtra("content", currentItem?.content)
+            intent.putExtra("author", currentItem?.author)
+            intent.putExtra("publishedAt", currentItem?.publishedAt)
+            intent.putExtra("image",currentItem?.urlToImage)
             context.startActivity(intent)
         }
     }

@@ -8,6 +8,7 @@
     <style name="Theme.Newz" parent="Base.Theme.Newz" />
 
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="backgroundTint">@drawable/chip_bg</item>
+        <item name="chipBackgroundColor">@drawable/chip_bg</item>
+        <item name="chipCornerRadius">6dp</item>
     </style>
 </resources>

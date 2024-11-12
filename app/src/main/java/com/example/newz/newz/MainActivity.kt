@@ -1,6 +1,5 @@
 package com.example.newz.newz
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,19 +12,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
 import com.example.newz.newz.adapter.NewsAdapter
 import com.example.newz.newz.models.NewsModel
-import com.example.newz.room.MainNotesActivity
-import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var nextBtn : Button
-    private lateinit var chipGroup:ChipGroup
-    private lateinit var newsData : NewsModel
-    private lateinit var loader : ProgressBar
-    private lateinit var refreshLayout : SwipeRefreshLayout
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var nextBtn: Button
+    private lateinit var chipGroup: ChipGroup
+    private lateinit var newsData: NewsModel
+    private lateinit var loader: ProgressBar
+    private lateinit var refreshLayout: SwipeRefreshLayout
+    private var category = "general"
 
 
     val vm = NewsVM()
@@ -33,59 +30,108 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val adapter : NewsAdapter?
+        val adapter: NewsAdapter?
         loader = findViewById(R.id.loader)
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
 
         lifecycleScope.launch {
-            vm.getTopHeadlines("us")
+            vm.getTopHeadlines("us", category)
         }
 
-        vm.isLoading.observe(this){
-         isLoading ->
-            if(isLoading){
+        vm.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
                 loader.visibility = View.VISIBLE
                 recyclerView.visibility = View.GONE
-            }
-            else{
+            } else {
                 loader.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
-
-
             }
         }
 
-        refreshLayout.setOnRefreshListener{
+        refreshLayout.setOnRefreshListener {
             lifecycleScope.launch {
-                vm.getTopHeadlines("us")
+                vm.getTopHeadlines("us", category)
                 refreshLayout.isRefreshing = false
             }
         }
 
-      //  nextBtn = findViewById(R.id.nextBtn)
+        //  nextBtn = findViewById(R.id.nextBtn)
         recyclerView = findViewById(R.id.recyclerView)
 
-        adapter = NewsAdapter(vm.articles,this)
+        adapter = NewsAdapter(vm.articles, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         chipGroup = findViewById(R.id.chipGroup)
-//        chipGroup.getChildAt(0).performClick()
         chipGroup.getChildAt(0).performClick()
 
-        chipGroup.setOnClickListener{
+        chipGroup.getChildAt(0).setOnClickListener {
+            if(category != "general") {
+                category = "general"
+                lifecycleScope.launch {
+                    vm.getTopHeadlines("us", category)
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+        }
+        chipGroup.getChildAt(1).setOnClickListener {
+            if(category != "business") {
+                category = "business"
+                lifecycleScope.launch {
+                    vm.getTopHeadlines("us", category)
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
+
+                }
+            }
 
         }
-//        chipGroup.setOnCheckedStateChangeListener { group, checkedId ->
-//            for (i in 0 until group.childCount) {
-//                val chip = group.getChildAt(i) as Chip
-//                if(chip.isSelected){
-//                    chip.chipStrokeColor = getColorStateList(R.color.blue)
-//                }
-//                else
-//                    chip.chipStrokeColor = getColorStateList(R.color.black)
-//            }
-//        }
+        chipGroup.getChildAt(2).setOnClickListener {
+            if(category != "entertainment") {
+                category = "entertainment"
+                lifecycleScope.launch {
+                    vm.getTopHeadlines("us", category)
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
+
+                }
+            }
+
+        }
+        chipGroup.getChildAt(3).setOnClickListener {
+            if(category != "health") {
+                category = "health"
+                lifecycleScope.launch {
+                    vm.getTopHeadlines("us", category)
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
+
+                }
+            }
+        }
+        chipGroup.getChildAt(4).setOnClickListener {
+            if(category != "science") {
+                category = "science"
+                lifecycleScope.launch {
+                    vm.getTopHeadlines("us", category)
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+        }
+        chipGroup.getChildAt(5).setOnClickListener {
+            if(category != "sports") {
+
+                category = "sports"
+                lifecycleScope.launch {
+                    vm.getTopHeadlines("us", category)
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
+
+                }
+            }
+
 
 
 //        nextBtn.setOnClickListener{
@@ -93,15 +139,14 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
-        vm.articles.observe(this) {
-            newsData = it
-            adapter.updateData(it)
+            vm.articles.observe(this) {
+                newsData = it
+                adapter.updateData(it)
+                adapter.notifyDataSetChanged()
+
+            }
+
         }
 
-//        lifecycleScope.launch {
-//            vm.articles.observe(MainActivity()){
-//
-//            }
     }
-
 }

@@ -13,17 +13,17 @@ import kotlinx.coroutines.withContext
 
 class NewsVM : ViewModel() {
     private val newsApiService = RetrofitObj.api.create(NewsApiService::class.java)
-
+    private lateinit var _articles : NewsModel
     val articles = MutableLiveData<NewsModel>()
     private val _isLoading = MutableLiveData<Boolean>(true)
     val isLoading: LiveData<Boolean> = _isLoading
 
     @SuppressLint("NullSafeMutableLiveData")
-    suspend fun getTopHeadlines(country: String) {
+    suspend fun getTopHeadlines(country: String, category:String) {
         _isLoading.value = true
 
         try {
-            val data: NewsModel? = newsApiService.getTopHeadlines(country).body()
+            val data: NewsModel? = newsApiService.getTopHeadlines(country,category).body()
             if (data != null) {
                 articles.value = data
             }
