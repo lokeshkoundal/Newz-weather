@@ -15,6 +15,13 @@ For Android developers, Kotlin offers a streamlined development experience with 
 Kotlin’s seamless interoperability with Java allows developers to gradually adopt Kotlin in existing Java projects. Kotlin code can call Java code and vice versa, allowing for a smooth migration without the need to rewrite entire projects. The compatibility extends to all Java libraries and frameworks, which can be directly used in Kotlin projects.
 
 In summary, Kotlin is a powerful, versatile language that offers significant advantages for modern development. Its expressive syntax, null safety, and support for asynchronous programming make it an attractive option for Android and JVM-based applications. Its growing ecosystem and strong community support suggest that Kotlin will continue to be a valuable tool for developers in years to come.</string>
+    <string name="general">General</string>
+    <string name="business">Business</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="health">Health</string>
+    <string name="science">Science</string>
+    <string name="sports">Sports</string>
+    <string name="saved_news">saved news</string>
 
 
 </resources>

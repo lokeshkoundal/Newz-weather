@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.newz.db.NewsDB
 import com.example.newz.newz.models.NewsModel
 import com.example.newz.newz.network.NewsApiService
 import com.example.newz.newz.network.RetrofitObj
@@ -17,6 +18,8 @@ class NewsVM : ViewModel() {
     val articles = MutableLiveData<NewsModel>()
     private val _isLoading = MutableLiveData<Boolean>(true)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    val bookmarkedNews = MutableLiveData<NewsModel>()
 
     @SuppressLint("NullSafeMutableLiveData")
     suspend fun getTopHeadlines(country: String, category:String) {
@@ -36,4 +39,5 @@ class NewsVM : ViewModel() {
         _isLoading.value = false
 
     }
+
 }

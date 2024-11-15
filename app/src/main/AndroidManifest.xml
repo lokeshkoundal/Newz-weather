@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Newz"
         tools:targetApi="31">
         <activity
+            android:name=".newz.BookmarkActivity"
+            android:exported="false" />
+        <activity
             android:name=".newz.ReadMoreActivity"
             android:exported="false" />
         <activity
