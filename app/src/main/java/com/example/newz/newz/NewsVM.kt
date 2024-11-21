@@ -1,6 +1,9 @@
 package com.example.newz.newz
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +22,6 @@ class NewsVM : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>(true)
     val isLoading: LiveData<Boolean> = _isLoading
 
-    val bookmarkedNews = MutableLiveData<NewsModel>()
 
     @SuppressLint("NullSafeMutableLiveData")
     suspend fun getTopHeadlines(country: String, category:String) {

@@ -10,14 +10,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
+import com.example.newz.db.News
+import com.example.newz.db.NewsVmDb
 import com.example.newz.newz.ReadMoreActivity
 import com.example.newz.newz.models.NewsModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context,var viewModel: NewsVmDb) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 //    private lateinit  var items: NewsModel
 
@@ -57,7 +63,38 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
 
 
         holder.bookmarkToggle.setOnClickListener {
-            it.isSelected = !it.isSelected
+            var news : News? = null
+
+            if(!it.isSelected){
+                 news = currentItem?.let { it1 ->
+                    News(0,it1.author,
+                        it1.content,it1.description,it1.publishedAt,it1.source,it1.title,it1.url,it1.urlToImage)
+                }
+
+                if (news != null) {
+                    val job = CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.insertBookmarkedNews(news)
+                    }
+                    if(job.isCompleted){
+                        it.isSelected = !it.isSelected
+                    }
+                }
+            }
+            else{
+                val job = CoroutineScope(Dispatchers.IO).launch {
+                    if (news != null) {
+                        viewModel.deleteBookmarkedNews(news.id)
+                    }
+                }
+                if(job.isCompleted){
+                    it.isSelected = !it.isSelected
+                }
+
+            }
+
+
+
+
         }
 
         holder.readMore.setOnClickListener(){
