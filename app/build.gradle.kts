@@ -4,6 +4,8 @@ plugins {
     id("com.google.devtools.ksp") version "1.9.0-1.0.11"
     id("androidx.navigation.safeargs") version "2.8.3"
 
+    id ("kotlin-kapt")
+
 
 }
 
@@ -55,6 +57,7 @@ dependencies {
 
     // To use Kotlin Symbol Processing (KSP)
 //    ksp(libs.androidx.room.compiler)
+    kapt ("androidx.room:room-compiler:2.5.0")
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)

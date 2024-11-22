@@ -7,20 +7,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NewsVmDb(private val application: Application) : AndroidViewModel(application){
-    private lateinit var allNews: LiveData<List<News>>
+class NewsVmDb(application: Application) : AndroidViewModel(application){
+    var allNews: LiveData<List<News>> = MutableLiveData()
     private val db = NewsDB.getDatabase(application)
 
-    suspend fun insertBookmarkedNews(news: News){
-        db.newsDao().insert(news)
+    private val newsDao: NewsDao = db.newsDao()
+     fun insertBookmarkedNews(news: News){
+        newsDao.insert(news)
     }
 
-    suspend fun getAllBookmarkedNews(){
-        allNews = db.newsDao().getAllNews()
+     fun getAllBookmarkedNews(){
+        allNews = newsDao.getAllNews()
     }
 
-    suspend fun deleteBookmarkedNews(newsId: Int){
-        db.newsDao().deleteNews(newsId)
+     fun deleteBookmarkedNews(newsId: Int){
+        newsDao.deleteNews(newsId)
     }
 
 

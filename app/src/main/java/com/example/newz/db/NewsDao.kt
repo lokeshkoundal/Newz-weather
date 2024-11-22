@@ -12,15 +12,15 @@ import retrofit2.Response
 interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(news: News)
+     fun insert(news: News) :Long
 
     @Query("SELECT * FROM news_table")
-    suspend fun getAllNews(): LiveData<List<News>>
+     fun getAllNews():LiveData<List<News>>
 
     @Query("DELETE FROM news_table WHERE id = :newsId")
-    suspend fun deleteNews(newsId : Int)
+     fun deleteNews(newsId : Int) :Int
 
     @Query("DELETE FROM news_table")
-    suspend fun deleteAll() : Response<News>
+     fun deleteAll() : Int
 
 }

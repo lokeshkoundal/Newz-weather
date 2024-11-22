@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
+import com.example.newz.db.NewsVMFactory
 import com.example.newz.db.NewsVmDb
 import com.example.newz.newz.adapter.NewsAdapter
 import com.example.newz.newz.models.NewsModel
@@ -29,11 +30,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newsData: NewsModel
     private lateinit var loader: ProgressBar
     private lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var  viewModelRoom :NewsVmDb
+
     private var category = "general"
 
 
-    val vm = NewsVM()
-    val viewModel = ViewModelProvider(this)[NewsVmDb::class.java]
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,9 @@ class MainActivity : AppCompatActivity() {
         loader = findViewById(R.id.loader)
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
         bookmarkBtn = findViewById(R.id.bookMarkBtn)
+
+        val vm = NewsVM()
+
 
         if (isInternetAvailable(this)) {
             lifecycleScope.launch {
@@ -80,7 +84,12 @@ class MainActivity : AppCompatActivity() {
         //  nextBtn = findViewById(R.id.nextBtn)
         recyclerView = findViewById(R.id.recyclerView)
 
-        adapter = NewsAdapter(vm.articles, this,viewModel)
+      //  viewModelRoom = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NewsVmDb::class.java)
+
+        viewModelRoom = ViewModelProvider(this, NewsVMFactory(application)).get(NewsVmDb::class.java)
+
+
+        adapter = NewsAdapter(vm.articles, this,viewModelRoom)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 

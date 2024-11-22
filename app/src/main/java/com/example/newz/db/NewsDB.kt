@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.newz.room.UserDatabase
 
 @Database(entities = [News::class], version = 1, exportSchema = false)
 abstract class NewsDB : RoomDatabase() {
@@ -17,15 +16,21 @@ abstract class NewsDB : RoomDatabase() {
 
                 fun getDatabase(context: Context): NewsDB {
 
-                        return INSTANCE?: synchronized(this){
-                                val instance = Room.databaseBuilder(
-                                        context.applicationContext,
-                                        NewsDB::class.java,
-                                        "news_db").build()
+                        if(INSTANCE==null) {
+                                synchronized(this) {
+                                        val instance = Room.databaseBuilder(
+                                                context.applicationContext,
+                                                NewsDB::class.java,
+                                                "news_db"
+                                        ).build()
 
-                                INSTANCE = instance
-                                return instance
+                                        INSTANCE = instance
+                                        return instance
+                                }
+                        }else{
+                                return INSTANCE as NewsDB
                         }
+
                 }
         }
 }

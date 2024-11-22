@@ -2,15 +2,12 @@ package com.example.newz.newz.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
@@ -21,7 +18,6 @@ import com.example.newz.newz.models.NewsModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 
 class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context,var viewModel: NewsVmDb) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
@@ -63,33 +59,29 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
 
 
         holder.bookmarkToggle.setOnClickListener {
-            var news : News? = null
+            var news: News? = null
 
             if(!it.isSelected){
                  news = currentItem?.let { it1 ->
                     News(0,it1.author,
-                        it1.content,it1.description,it1.publishedAt,it1.source,it1.title,it1.url,it1.urlToImage)
+                        it1.content,it1.description,it1.publishedAt,it1.source.toString(),it1.title,it1.url,it1.urlToImage)
                 }
 
                 if (news != null) {
-                    val job = CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.IO).launch {
                         viewModel.insertBookmarkedNews(news)
+                        it.isSelected = true
+
                     }
-                    if(job.isCompleted){
-                        it.isSelected = !it.isSelected
-                    }
+
                 }
             }
-            else{
-                val job = CoroutineScope(Dispatchers.IO).launch {
+            else{ CoroutineScope(Dispatchers.IO).launch {
                     if (news != null) {
-                        viewModel.deleteBookmarkedNews(news.id)
+                        news.id?.let { it1 -> viewModel.deleteBookmarkedNews(it1) }
+                        it.isSelected = false
                     }
                 }
-                if(job.isCompleted){
-                    it.isSelected = !it.isSelected
-                }
-
             }
 
 
@@ -98,7 +90,7 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
         }
 
         holder.readMore.setOnClickListener(){
-            val intent:Intent = Intent(context, ReadMoreActivity::class.java)
+            val intent = Intent(context, ReadMoreActivity::class.java)
             intent.putExtra("title", currentItem?.title)
             intent.putExtra("content", currentItem?.content)
             intent.putExtra("author", currentItem?.author)
