@@ -2,5 +2,5 @@
 <!-- res/drawable/icon_toggle.xml -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/ic_bookmark_empty" android:state_selected="false" />
-    <item android:drawable="@drawable/ic_bookmark_filled" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_bookmark_filled" />
 </selector>

@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import retrofit2.Response
 
 
 @Dao
@@ -19,6 +18,9 @@ interface NewsDao {
 
     @Query("DELETE FROM news_table WHERE id = :newsId")
      fun deleteNews(newsId : Int) :Int
+
+    @Query("DELETE FROM news_table WHERE title = :newsTitle")
+    fun deleteNews(newsTitle : String) :Int
 
     @Query("DELETE FROM news_table")
      fun deleteAll() : Int

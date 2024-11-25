@@ -62,7 +62,8 @@
             android:layout_height="wrap_content"
             android:text="jwehfiudshf ejhfygf f fhg fvv vv v vversdver wefav evv we we few fjhfuihf nuf iof hf jfnfy8 ffoiydf foijf ff 9uffjfu fnk f9 fn 9ujf nkf kjoe fh"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/articleTitle"
             tools:layout_editor_absoluteX="16dp" />

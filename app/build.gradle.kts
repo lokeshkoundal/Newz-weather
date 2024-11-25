@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp") version "1.9.0-1.0.11"
     id("androidx.navigation.safeargs") version "2.8.3"
-
     id ("kotlin-kapt")
 
 
@@ -19,7 +18,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -72,6 +70,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.retrofit)
+    implementation (libs.logging.interceptor)
     implementation(libs.converter.gson)
 
     // Coroutines

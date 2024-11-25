@@ -22,17 +22,37 @@ import kotlinx.coroutines.launch
 class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context,var viewModel: NewsVmDb) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 //    private lateinit  var items: NewsModel
-
+private val hashmap:HashMap<String,Boolean> = hashMapOf()
 
     fun updateData(newItems: NewsModel) {
         items = MutableLiveData(newItems)
+        hashmap.clear()
+        items.value?.articles?.forEach {
+            hashmap[it.title] = true
+        }
+
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val view : View = LayoutInflater.from(parent.context).inflate(R.layout.article_rv, parent, false)
+
+//        items.value?.articles?.forEach {
+//            hashmap[it.title] = false
+//        }
+//
+//        viewModel.getAllBookmarkedNews()
+//        viewModel.allNews.value?.forEach {
+//            hashmap[it.title] = true
+//        }
+
         return NewsViewHolder(view)
 
+    }
+
+    fun updateHashmap(hashmap: HashMap<String, Boolean>){
+        this.hashmap.clear()
+        this.hashmap.putAll(hashmap)
     }
 
 
@@ -42,6 +62,9 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val currentItem = items.value?.articles?.get(position)
+
+        holder.bookmarkToggle.isSelected = hashmap[currentItem?.title]==true
+
 
         if (currentItem != null) {
             holder.title.text = currentItem.title
@@ -58,29 +81,35 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
         }
 
 
+
         holder.bookmarkToggle.setOnClickListener {
             var news: News? = null
 
             if(!it.isSelected){
                  news = currentItem?.let { it1 ->
-                    News(0,it1.author,
-                        it1.content,it1.description,it1.publishedAt,it1.source.toString(),it1.title,it1.url,it1.urlToImage)
+                    News(null,it1.author?:"",
+                        it1.content?:"",it1.description,it1.publishedAt,it1.source.toString(),it1.title,it1.url,it1.urlToImage)
                 }
 
                 if (news != null) {
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.insertBookmarkedNews(news)
                         it.isSelected = true
+                        if(currentItem?.title!=null){
+                            hashmap[currentItem.title]=true
+                        }
+
 
                     }
 
                 }
             }
             else{ CoroutineScope(Dispatchers.IO).launch {
-                    if (news != null) {
-                        news.id?.let { it1 -> viewModel.deleteBookmarkedNews(it1) }
+                 currentItem?.title?.let { it1 ->
+                      viewModel.deleteBookmarkedNewsByTitle(it1)
                         it.isSelected = false
-                    }
+                         hashmap[currentItem.title]=false
+                 }
                 }
             }
 

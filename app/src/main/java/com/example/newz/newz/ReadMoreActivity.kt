@@ -34,13 +34,14 @@ class ReadMoreActivity : AppCompatActivity() {
 
         titleTv.text = title
         contentTv.text = content
-        authorTv.text = author
+        authorTv.text = "~" + author
         publishedAtTv.text = publishedAt
 
         Glide.with(this)
             .load(imageUrl)
             .placeholder(R.drawable.baseline_replay_24) // Optional: add a placeholder while loading
             .error(R.drawable.ic_error) // Optional: add an error image in case of failure
+            .centerCrop()
             .into(imageView)
 
 

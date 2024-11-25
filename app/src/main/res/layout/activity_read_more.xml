@@ -5,8 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:backgroundTint="@color/white"
+    android:layout_margin="8dp"
+    android:padding="6dp"
+    android:background="@drawable/black_border"
     tools:context=".newz.ReadMoreActivity">
 
     <androidx.cardview.widget.CardView
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:padding="4dp"
         app:cardCornerRadius="8dp"
-        android:backgroundTint="@color/white"
+        android:background="#39BAF4"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alike_angular"
+            android:background="#58CBFF"
             android:padding="4dp"
             android:text="Bronny makes G League debut, 'excited' to play - ESPN"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
@@ -40,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_marginVertical="20dp"
         android:text="jfsdhfguhfgkjfh"
         app:layout_constraintEnd_toStartOf="@+id/dateTv"
@@ -53,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="12 Oct 2015"
         android:fontFamily="sans-serif"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/authorTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/authorTv" />
@@ -61,9 +63,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:src="@drawable/ic_launcher_background"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/authorTv"
         app:layout_constraintTop_toBottomOf="@+id/authorTv" />
 
@@ -83,11 +85,11 @@
             android:id="@+id/contentTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="sans-serif"
             android:padding="8dp"
             android:text="@string/kt_para"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
 
 
     </ScrollView>

@@ -1,23 +1,16 @@
 package com.example.newz.newz
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newz.db.NewsDB
 import com.example.newz.newz.models.NewsModel
 import com.example.newz.newz.network.NewsApiService
 import com.example.newz.newz.network.RetrofitObj
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class NewsVM : ViewModel() {
     private val newsApiService = RetrofitObj.api.create(NewsApiService::class.java)
-    private lateinit var _articles : NewsModel
     val articles = MutableLiveData<NewsModel>()
     private val _isLoading = MutableLiveData<Boolean>(true)
     val isLoading: LiveData<Boolean> = _isLoading
@@ -33,7 +26,7 @@ class NewsVM : ViewModel() {
                 articles.value = data
             }
         }catch (e :Exception){
-            Log.d("tagg","Excepttioonnn aaa gayiii")
+            Log.d("NewsVM",e.toString())
         }finally {
             _isLoading.value = false
         }

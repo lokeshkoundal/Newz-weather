@@ -19,22 +19,19 @@ import kotlinx.coroutines.launch
 
 class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Context, private var viewModel: NewsVmDb) : RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder>(){
 
-    private var hashmap: HashMap<Int?, Boolean> = HashMap()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BookmarkViewHolder {
         val view : View = LayoutInflater.from(parent.context).inflate(R.layout.article_rv, parent, false)
-        bookmarkedNews.forEach {
-            hashmap[it.id] = true
-        }
+
         return BookmarkViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: BookmarkAdapter.BookmarkViewHolder, position: Int) {
 
-        holder.bookmarkToggle.isSelected = hashmap[bookmarkedNews[position].id] == true
+        holder.bookmarkToggle.isSelected = true
 
         val currentItem = bookmarkedNews[position]
 
@@ -63,16 +60,17 @@ class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Conte
 
                 CoroutineScope(Dispatchers.IO).launch {
                         viewModel.insertBookmarkedNews(news)
-                        hashmap[news.id] = it.isSelected
                         it.isSelected = true
                 }
 
             }
             else{
                 CoroutineScope(Dispatchers.IO).launch {
-                    news.id?.let { it1 -> viewModel.deleteBookmarkedNews(it1) }
-                    hashmap[news.id] = it.isSelected
+//                    news.id?.let { it1 -> viewModel.deleteBookmarkedNews(it1) }
+                    viewModel.deleteBookmarkedNewsByTitle(currentItem.title)
                     it.isSelected = false
+
+
 
                 }
             }

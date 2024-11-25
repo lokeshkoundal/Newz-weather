@@ -10,8 +10,8 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
@@ -27,13 +27,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var bookmarkBtn: FloatingActionButton
     private lateinit var chipGroup: ChipGroup
-    private lateinit var newsData: NewsModel
+    private  var newsData: NewsModel? = null
     private lateinit var loader: ProgressBar
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var  viewModelRoom :NewsVmDb
 
     private var category = "general"
-
 
 
 
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         bookmarkBtn = findViewById(R.id.bookMarkBtn)
 
         val vm = NewsVM()
-
+        viewModelRoom = ViewModelProvider(this, NewsVMFactory(application))[NewsVmDb::class.java]
 
         if (isInternetAvailable(this)) {
             lifecycleScope.launch {
@@ -56,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             showNoInternetDialog(this)
         }
 
+        viewModelRoom.getAllBookmarkedNews()
 
         vm.isLoading.observe(this) { isLoading ->
             if (isLoading) {
@@ -81,12 +81,12 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
         //  nextBtn = findViewById(R.id.nextBtn)
         recyclerView = findViewById(R.id.recyclerView)
 
       //  viewModelRoom = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NewsVmDb::class.java)
 
-        viewModelRoom = ViewModelProvider(this, NewsVMFactory(application)).get(NewsVmDb::class.java)
 
 
         adapter = NewsAdapter(vm.articles, this,viewModelRoom)
@@ -95,6 +95,17 @@ class MainActivity : AppCompatActivity() {
 
         chipGroup = findViewById(R.id.chipGroup)
         chipGroup.getChildAt(0).performClick()
+
+        vm.articles.observe(this) {
+            newsData = it
+
+
+            adapter.updateData(it)
+            adapter.notifyDataSetChanged()
+
+        }
+
+
 
         chipGroup.getChildAt(0).setOnClickListener {
             if (category != "general") {
@@ -199,12 +210,24 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        vm.articles.observe(this) {
-            newsData = it
-            adapter.updateData(it)
-            adapter.notifyDataSetChanged()
+
+        viewModelRoom.allNews.observe(this){
+            val hashmap = HashMap<String, Boolean>()
+
+            newsData?.articles?.forEach {it1->
+                hashmap[it1.title] = false
+            }
+
+            viewModelRoom.getAllBookmarkedNews()
+            viewModelRoom.allNews.value?.forEach {it3->
+                hashmap[it3.title] = true
+            }
+
+            adapter.updateHashmap(hashmap)
 
         }
+
+
     }
 
 
@@ -222,7 +245,7 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("No Internet Connection")
         builder.setMessage("Please check your internet connection and try again.")
-        builder.setCancelable(false) // Prevent the dialog from being dismissed by clicking outside
+        builder.setCancelable(true)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss() // Close the dialog when the user presses OK
         }
