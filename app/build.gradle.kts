@@ -24,10 +24,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),"proguard-rules.pro")
         }
     }
     compileOptions {
@@ -41,7 +38,8 @@ android {
 
 dependencies {
 
-
+    implementation(libs.androidx.paging.runtime.ktx)
+    
     implementation (libs.glide)
 
     implementation(libs.androidx.room.runtime)
@@ -55,7 +53,7 @@ dependencies {
 
     // To use Kotlin Symbol Processing (KSP)
 //    ksp(libs.androidx.room.compiler)
-    kapt ("androidx.room:room-compiler:2.5.0")
+    ksp (libs.androidx.room.compiler.v250)
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)

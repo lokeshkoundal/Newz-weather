@@ -12,16 +12,17 @@ import com.example.newz.newz.network.RetrofitObj
 class NewsVM : ViewModel() {
     private val newsApiService = RetrofitObj.api.create(NewsApiService::class.java)
     val articles = MutableLiveData<NewsModel>()
-    private val _isLoading = MutableLiveData<Boolean>(true)
+    private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
-
+    var currentCategory = MutableLiveData<String>()
 
     @SuppressLint("NullSafeMutableLiveData")
-    suspend fun getTopHeadlines(country: String, category:String) {
+    suspend fun getTopHeadlines(country: String) {
         _isLoading.value = true
 
         try {
-            val data: NewsModel? = newsApiService.getTopHeadlines(country,category).body()
+            val data: NewsModel? =
+                currentCategory.value?.let { newsApiService.getTopHeadlines(country, it).body() }
             if (data != null) {
                 articles.value = data
             }

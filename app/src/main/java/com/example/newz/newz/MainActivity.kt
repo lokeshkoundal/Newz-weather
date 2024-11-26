@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loader: ProgressBar
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var  viewModelRoom :NewsVmDb
-
-    private var category = "general"
+    val hashmap = HashMap<String, Boolean>()
 
 
 
@@ -47,10 +46,14 @@ class MainActivity : AppCompatActivity() {
         val vm = NewsVM()
         viewModelRoom = ViewModelProvider(this, NewsVMFactory(application))[NewsVmDb::class.java]
 
-        if (isInternetAvailable(this)) {
+        vm.currentCategory.observe(this){
             lifecycleScope.launch {
-                vm.getTopHeadlines("us", category)
+                vm.getTopHeadlines("us")
             }
+        }
+
+        if (isInternetAvailable(this)) {
+           vm.currentCategory.value = "general"
         } else {
             showNoInternetDialog(this)
         }
@@ -74,18 +77,14 @@ class MainActivity : AppCompatActivity() {
 
             } else {
                 lifecycleScope.launch {
-                    vm.getTopHeadlines("us", category)
+                    vm.getTopHeadlines("us")
                     refreshLayout.isRefreshing = false
                 }
             }
 
         }
 
-
-        //  nextBtn = findViewById(R.id.nextBtn)
         recyclerView = findViewById(R.id.recyclerView)
-
-      //  viewModelRoom = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NewsVmDb::class.java)
 
 
 
@@ -98,108 +97,86 @@ class MainActivity : AppCompatActivity() {
 
         vm.articles.observe(this) {
             newsData = it
-
-
             adapter.updateData(it)
             adapter.notifyDataSetChanged()
 
         }
 
-
-
         chipGroup.getChildAt(0).setOnClickListener {
-            if (category != "general") {
-                category = "general"
+            if (vm.currentCategory.value != "general") {
+
                 if (!isInternetAvailable(this)) {
+                    it.isSelected = false
                     showNoInternetDialog(this)
                 } else {
-
-                    lifecycleScope.launch {
-                        vm.getTopHeadlines("us", category)
-                        adapter.notifyDataSetChanged()
-                        recyclerView.scrollToPosition(0)
-                    }
+                    vm.currentCategory.value = "general"
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
                 }
-
             }
         }
+
         chipGroup.getChildAt(1).setOnClickListener {
-            if (category != "business") {
-                category = "business"
+            if (vm.currentCategory.value != "business") {
+
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    lifecycleScope.launch {
-                        vm.getTopHeadlines("us", category)
-                        adapter.notifyDataSetChanged()
-                        recyclerView.scrollToPosition(0)
-
-                    }
+                    vm.currentCategory.value = "business"
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
                 }
-
             }
 
-        }
+            }
         chipGroup.getChildAt(2).setOnClickListener {
-            if (category != "entertainment") {
-                category = "entertainment"
-                if (!isInternetAvailable(this)) {
-                    showNoInternetDialog(this)
-                } else {
-                    lifecycleScope.launch {
-                        vm.getTopHeadlines("us", category)
-                        adapter.notifyDataSetChanged()
-                        recyclerView.scrollToPosition(0)
+        if (vm.currentCategory.value != "entertainment") {
 
-                    }
-                }
-
+            if (!isInternetAvailable(this)) {
+                showNoInternetDialog(this)
+            } else {
+                vm.currentCategory.value = "entertainment"
+                adapter.notifyDataSetChanged()
+                recyclerView.scrollToPosition(0)
             }
+        }
 
         }
         chipGroup.getChildAt(3).setOnClickListener {
-            if (category != "health") {
-                category = "health"
+            if (vm.currentCategory.value != "health") {
+
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    lifecycleScope.launch {
-                        vm.getTopHeadlines("us", category)
-                        adapter.notifyDataSetChanged()
-                        recyclerView.scrollToPosition(0)
-
-                    }
+                    vm.currentCategory.value = "health"
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
                 }
 
             }
         }
         chipGroup.getChildAt(4).setOnClickListener {
-            if (category != "science") {
-                category = "science"
+            if (vm.currentCategory.value != "science") {
+
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    lifecycleScope.launch {
-                        vm.getTopHeadlines("us", category)
-                        adapter.notifyDataSetChanged()
-                        recyclerView.scrollToPosition(0)
-                    }
+                    vm.currentCategory.value = "science"
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
                 }
 
             }
         }
         chipGroup.getChildAt(5).setOnClickListener {
-            if (category != "sports") {
-                category = "sports"
+            if (vm.currentCategory.value != "sports") {
 
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    lifecycleScope.launch {
-                        vm.getTopHeadlines("us", category)
-                        adapter.notifyDataSetChanged()
-                        recyclerView.scrollToPosition(0)
-                    }
+                    vm.currentCategory.value = "sports"
+                    adapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
                 }
 
             }
@@ -211,27 +188,30 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        viewModelRoom.allNews.observe(this){
-            val hashmap = HashMap<String, Boolean>()
 
-            newsData?.articles?.forEach {it1->
-                hashmap[it1.title] = false
-            }
-
-            viewModelRoom.getAllBookmarkedNews()
-            viewModelRoom.allNews.value?.forEach {it3->
-                hashmap[it3.title] = true
-            }
-
-            adapter.updateHashmap(hashmap)
-
-        }
-
+//        viewModelRoom.allNews.observe(this){
+//
+//            if(it!=null&&newsData!=null){
+//                if(viewModelRoom.allNews.isInitialized&& newsData!=null){
+//                    newsData?.articles?.forEach {it1->
+//                        hashmap[it1.title] = false
+//                    }
+//
+//                    viewModelRoom.allNews.observe(this){
+//                        viewModelRoom.getAllBookmarkedNews()
+//                        viewModelRoom.allNews.value?.forEach {it3->
+//                            hashmap[it3.title] = true
+//                        }
+//                    }
+//
+//                    adapter.updateHashmap(hashmap)
+//                }
+//            }
+//
+//
+//        }
 
     }
-
-
-
 
     private fun isInternetAvailable(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -252,4 +232,9 @@ class MainActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
     }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        viewModelRoom.getAllBookmarkedNews()
+//    }
 }

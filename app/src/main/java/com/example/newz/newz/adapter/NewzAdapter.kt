@@ -22,14 +22,19 @@ import kotlinx.coroutines.launch
 class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context,var viewModel: NewsVmDb) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 //    private lateinit  var items: NewsModel
-private val hashmap:HashMap<String,Boolean> = hashMapOf()
+//private val hashmap:HashMap<String,Boolean> = hashMapOf()
 
     fun updateData(newItems: NewsModel) {
         items = MutableLiveData(newItems)
-        hashmap.clear()
-        items.value?.articles?.forEach {
-            hashmap[it.title] = true
-        }
+//        hashmap.clear()
+//        items.value?.articles?.forEach {
+//            hashmap[it.title] = false
+//        }
+//
+//        viewModel.getAllBookmarkedNews()
+//        viewModel.allNews.value?.forEach {
+//            hashmap[it.title] = true
+//        }
 
         notifyDataSetChanged()
     }
@@ -50,10 +55,10 @@ private val hashmap:HashMap<String,Boolean> = hashMapOf()
 
     }
 
-    fun updateHashmap(hashmap: HashMap<String, Boolean>){
-        this.hashmap.clear()
-        this.hashmap.putAll(hashmap)
-    }
+//    fun updateHashmap(hashmap: HashMap<String, Boolean>){
+//        this.hashmap.clear()
+//        this.hashmap.putAll(hashmap)
+//    }
 
 
     override fun getItemCount(): Int {
@@ -63,8 +68,13 @@ private val hashmap:HashMap<String,Boolean> = hashMapOf()
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val currentItem = items.value?.articles?.get(position)
 
-        holder.bookmarkToggle.isSelected = hashmap[currentItem?.title]==true
-
+//        if(hashmap[currentItem?.title] == true){
+//            holder.bookmarkToggle.isSelected = true
+//        }
+//        else{
+//            holder.bookmarkToggle.isSelected = false
+//
+//        }
 
         if (currentItem != null) {
             holder.title.text = currentItem.title
@@ -95,11 +105,9 @@ private val hashmap:HashMap<String,Boolean> = hashMapOf()
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.insertBookmarkedNews(news)
                         it.isSelected = true
-                        if(currentItem?.title!=null){
-                            hashmap[currentItem.title]=true
-                        }
-
-
+//                        if(currentItem?.title!=null){
+//                            hashmap[currentItem.title]=true
+//                        }
                     }
 
                 }
@@ -108,13 +116,10 @@ private val hashmap:HashMap<String,Boolean> = hashMapOf()
                  currentItem?.title?.let { it1 ->
                       viewModel.deleteBookmarkedNewsByTitle(it1)
                         it.isSelected = false
-                         hashmap[currentItem.title]=false
+//                         hashmap[currentItem.title]=false
                  }
                 }
             }
-
-
-
 
         }
 
