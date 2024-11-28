@@ -14,7 +14,7 @@ abstract class NewsDB : RoomDatabase() {
                 @Volatile
                 private var INSTANCE: NewsDB? = null
 
-                fun getDatabase(context: Context): NewsDB {
+                fun getNewsDao(context: Context): NewsDao {
 
                         if(INSTANCE==null) {
                                 synchronized(this) {
@@ -25,10 +25,10 @@ abstract class NewsDB : RoomDatabase() {
                                         ).build()
 
                                         INSTANCE = instance
-                                        return instance
+                                        return instance.newsDao()
                                 }
                         }else{
-                                return INSTANCE as NewsDB
+                                return INSTANCE!!.newsDao()
                         }
 
                 }

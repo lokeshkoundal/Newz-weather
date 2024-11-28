@@ -1,11 +1,10 @@
-plugins {
+plugins{
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-//    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
-    id("androidx.navigation.safeargs") version "2.8.3"
+    id("com.google.devtools.ksp")
+//    id("androidx.navigation.safeargs") version "2.8.4"
     id ("kotlin-kapt")
-    id ("com.google.dagger.hilt.android")
-
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -39,10 +38,16 @@ android {
 
 dependencies {
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+//    Hilt
+//    implementation(libs.dagger.hilt.android.gradle.plugin)
+//    implementation(libs.hilt.android)
+//    kapt(libs.hilt.compiler)
+////    kapt(libs.hilt.core)
+//    implementation (libs.androidx.hilt.lifecycle.viewmodel)
 //    kapt (libs.androidx.hilt.compiler)
 
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
 
     implementation(libs.androidx.paging.runtime.ktx)
@@ -51,15 +56,15 @@ dependencies {
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.swiperefreshlayout)
-    annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.symbol.processing.api)
 
     // Views/Fragments integration
     implementation(libs.androidx.navigation.fragment)
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.navigation.ui)
 
     // To use Kotlin Symbol Processing (KSP)
-//    ksp(libs.androidx.room.compiler)
+//    kapt(libs.androidx.room.compiler)
 //    kapt (libs.androidx.room.compiler.v250)
 
     // optional - Kotlin Extensions and Coroutines support for Room
@@ -69,6 +74,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.activity.ktx) // Ensure you're using the latest version
+
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

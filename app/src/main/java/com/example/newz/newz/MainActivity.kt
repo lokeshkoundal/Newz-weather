@@ -10,16 +10,13 @@ import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
-import com.example.newz.db.NewsVMFactory
 import com.example.newz.db.NewsVmDb
 import com.example.newz.newz.adapter.NewsAdapter
-import com.example.newz.newz.models.NewsModel
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,18 +27,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var bookmarkBtn: FloatingActionButton
     private lateinit var chipGroup: ChipGroup
-    private  var newsData: NewsModel? = null
+//    private  var newsData: NewsModel? = null
     private lateinit var loader: ProgressBar
     private lateinit var refreshLayout: SwipeRefreshLayout
-    private lateinit var  viewModelRoom :NewsVmDb
+//    private lateinit var  viewModelRoom :NewsVmDb
 //    private lateinit var vm : NewsVM
-    private val vm: NewsVM by viewModels()
-
-
+    private  val vm: NewsVM by viewModels()
+    private  val viewModelRoom: NewsVmDb by viewModels()
 
     val hashmap = HashMap<String, Boolean>()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +45,10 @@ class MainActivity : AppCompatActivity() {
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
         bookmarkBtn = findViewById(R.id.bookMarkBtn)
 
+
+
 //        vm = NewsVM()
-        viewModelRoom = ViewModelProvider(this, NewsVMFactory(application))[NewsVmDb::class.java]
+//        viewModelRoom = ViewModelProvider(this, NewsVMFactory(application))[NewsVmDb::class.java]
 
         vm.currentCategory.observe(this){
             lifecycleScope.launch {
@@ -105,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         chipGroup.getChildAt(0).performClick()
 
         vm.articles.observe(this) {
-            newsData = it
+//            newsData = it
             adapter.updateData(it)
             adapter.notifyDataSetChanged()
 
@@ -120,11 +116,11 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     vm.currentCategory.value = "general"
                     adapter.notifyDataSetChanged()
-                    recyclerView.scrollToPosition(0)
+                    recyclerView.smoothScrollToPosition(0)
                 }
             }
             else{
-                recyclerView.scrollToPosition(0)
+                recyclerView.smoothScrollToPosition(0)
 
             }
         }
@@ -137,12 +133,11 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     vm.currentCategory.value = "business"
                     adapter.notifyDataSetChanged()
-                    recyclerView.scrollToPosition(0)
+                    recyclerView.smoothScrollToPosition(0)
                 }
             }
             else{
-                recyclerView.scrollToPosition(0)
-
+                recyclerView.smoothScrollToPosition(0)
             }
 
             }
@@ -154,11 +149,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 vm.currentCategory.value = "entertainment"
                 adapter.notifyDataSetChanged()
-                recyclerView.scrollToPosition(0)
+                recyclerView.smoothScrollToPosition(0)
             }
         }
         else{
-            recyclerView.scrollToPosition(0)
+            recyclerView.smoothScrollToPosition(0)
 
         }
 
@@ -171,12 +166,12 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     vm.currentCategory.value = "health"
                     adapter.notifyDataSetChanged()
-                    recyclerView.scrollToPosition(0)
+                    recyclerView.smoothScrollToPosition(0)
                 }
 
             }
             else{
-                recyclerView.scrollToPosition(0)
+                recyclerView.smoothScrollToPosition(0)
 
             }
         }
@@ -188,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     vm.currentCategory.value = "science"
                     adapter.notifyDataSetChanged()
-                    recyclerView.scrollToPosition(0)
+                    recyclerView.smoothScrollToPosition(0)
                 }
 
             }
@@ -205,12 +200,12 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     vm.currentCategory.value = "sports"
                     adapter.notifyDataSetChanged()
-                    recyclerView.scrollToPosition(0)
+                    recyclerView.smoothScrollToPosition(0)
                 }
 
             }
             else{
-                recyclerView.scrollToPosition(0)
+                recyclerView.smoothScrollToPosition(0)
 
             }
         }
