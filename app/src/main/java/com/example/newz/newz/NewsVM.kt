@@ -7,10 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newz.newz.models.NewsModel
 import com.example.newz.newz.network.NewsApiService
-import com.example.newz.newz.network.RetrofitObj
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class NewsVM : ViewModel() {
-    private val newsApiService = RetrofitObj.api.create(NewsApiService::class.java)
+@HiltViewModel
+class NewsVM @Inject constructor(private val newsApiService: NewsApiService): ViewModel() {
+
+//    private val newsApiService = RetrofitObj.api.create(NewsApiService::class.java)
     val articles = MutableLiveData<NewsModel>()
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading

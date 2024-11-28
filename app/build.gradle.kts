@@ -1,9 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
+//    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
     id("androidx.navigation.safeargs") version "2.8.3"
     id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
 
 
 }
@@ -38,6 +39,12 @@ android {
 
 dependencies {
 
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+//    kapt (libs.androidx.hilt.compiler)
+
+
+
     implementation(libs.androidx.paging.runtime.ktx)
     
     implementation (libs.glide)
@@ -53,7 +60,7 @@ dependencies {
 
     // To use Kotlin Symbol Processing (KSP)
 //    ksp(libs.androidx.room.compiler)
-    ksp (libs.androidx.room.compiler.v250)
+//    kapt (libs.androidx.room.compiler.v250)
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
@@ -78,4 +85,8 @@ dependencies {
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
+}
+
+kapt {
+    correctErrorTypes = true
 }

@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -21,8 +22,10 @@ import com.example.newz.newz.adapter.NewsAdapter
 import com.example.newz.newz.models.NewsModel
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var bookmarkBtn: FloatingActionButton
@@ -31,6 +34,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loader: ProgressBar
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var  viewModelRoom :NewsVmDb
+//    private lateinit var vm : NewsVM
+    private val vm: NewsVM by viewModels()
+
+
+
     val hashmap = HashMap<String, Boolean>()
 
 
@@ -43,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
         bookmarkBtn = findViewById(R.id.bookMarkBtn)
 
-        val vm = NewsVM()
+//        vm = NewsVM()
         viewModelRoom = ViewModelProvider(this, NewsVMFactory(application))[NewsVmDb::class.java]
 
         vm.currentCategory.observe(this){
@@ -90,6 +98,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = NewsAdapter(vm.articles, this,viewModelRoom)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
         chipGroup = findViewById(R.id.chipGroup)
@@ -114,6 +123,10 @@ class MainActivity : AppCompatActivity() {
                     recyclerView.scrollToPosition(0)
                 }
             }
+            else{
+                recyclerView.scrollToPosition(0)
+
+            }
         }
 
         chipGroup.getChildAt(1).setOnClickListener {
@@ -127,6 +140,10 @@ class MainActivity : AppCompatActivity() {
                     recyclerView.scrollToPosition(0)
                 }
             }
+            else{
+                recyclerView.scrollToPosition(0)
+
+            }
 
             }
         chipGroup.getChildAt(2).setOnClickListener {
@@ -139,6 +156,10 @@ class MainActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
                 recyclerView.scrollToPosition(0)
             }
+        }
+        else{
+            recyclerView.scrollToPosition(0)
+
         }
 
         }
@@ -154,6 +175,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
+            else{
+                recyclerView.scrollToPosition(0)
+
+            }
         }
         chipGroup.getChildAt(4).setOnClickListener {
             if (vm.currentCategory.value != "science") {
@@ -167,6 +192,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
+            else{
+                recyclerView.scrollToPosition(0)
+
+            }
         }
         chipGroup.getChildAt(5).setOnClickListener {
             if (vm.currentCategory.value != "sports") {
@@ -178,6 +207,10 @@ class MainActivity : AppCompatActivity() {
                     adapter.notifyDataSetChanged()
                     recyclerView.scrollToPosition(0)
                 }
+
+            }
+            else{
+                recyclerView.scrollToPosition(0)
 
             }
         }
@@ -232,9 +265,11 @@ class MainActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
     }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        viewModelRoom.getAllBookmarkedNews()
-//    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            vm.getTopHeadlines("us")
+        }
+    }
 }

@@ -10,7 +10,7 @@ object RetrofitObj {
 
     private val okHttpClient = OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
 
-    val api: Retrofit = Retrofit.Builder()
+    val api = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)

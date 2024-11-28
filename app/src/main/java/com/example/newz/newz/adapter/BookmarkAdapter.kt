@@ -13,6 +13,7 @@ import com.example.newz.R
 import com.example.newz.db.News
 import com.example.newz.db.NewsVmDb
 import com.example.newz.newz.ReadMoreActivity
+import com.example.newz.newz.adapter.NewsAdapter.Companion.hashmap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -69,6 +70,7 @@ class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Conte
 //                    news.id?.let { it1 -> viewModel.deleteBookmarkedNews(it1) }
                     viewModel.deleteBookmarkedNewsByTitle(currentItem.title)
                     it.isSelected = false
+                    hashmap[currentItem.title]=false
 
 
 

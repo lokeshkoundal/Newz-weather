@@ -22,7 +22,10 @@ import kotlinx.coroutines.launch
 class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context,var viewModel: NewsVmDb) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 //    private lateinit  var items: NewsModel
-//private val hashmap:HashMap<String,Boolean> = hashMapOf()
+    companion object{
+    val hashmap:HashMap<String,Boolean> = hashMapOf()
+
+}
 
     fun updateData(newItems: NewsModel) {
         items = MutableLiveData(newItems)
@@ -68,13 +71,7 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val currentItem = items.value?.articles?.get(position)
 
-//        if(hashmap[currentItem?.title] == true){
-//            holder.bookmarkToggle.isSelected = true
-//        }
-//        else{
-//            holder.bookmarkToggle.isSelected = false
-//
-//        }
+        holder.bookmarkToggle.isSelected = hashmap[currentItem?.title] == true
 
         if (currentItem != null) {
             holder.title.text = currentItem.title
@@ -105,9 +102,9 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.insertBookmarkedNews(news)
                         it.isSelected = true
-//                        if(currentItem?.title!=null){
-//                            hashmap[currentItem.title]=true
-//                        }
+                        if(currentItem?.title!=null){
+                            hashmap[currentItem.title]=true
+                        }
                     }
 
                 }
@@ -116,7 +113,7 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
                  currentItem?.title?.let { it1 ->
                       viewModel.deleteBookmarkedNewsByTitle(it1)
                         it.isSelected = false
-//                         hashmap[currentItem.title]=false
+                         hashmap[currentItem.title]=false
                  }
                 }
             }
