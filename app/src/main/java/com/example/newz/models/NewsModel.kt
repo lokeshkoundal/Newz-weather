@@ -1,4 +1,4 @@
-package com.example.newz.newz.models
+package com.example.newz.models
 
 data class NewsModel(
     val articles: List<Article>,

@@ -1,4 +1,4 @@
-package com.example.newz.newz.adapter
+package com.example.newz.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
 import com.example.newz.db.News
-import com.example.newz.db.NewsVmDb
-import com.example.newz.newz.ReadMoreActivity
-import com.example.newz.newz.models.NewsModel
+import com.example.newz.viewmodels.NewsVmDb
+import com.example.newz.activities.ReadMoreActivity
+import com.example.newz.models.NewsModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context,var viewModel: NewsVmDb) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var context : Context, var viewModel: NewsVmDb) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 //    private lateinit  var items: NewsModel
     companion object{

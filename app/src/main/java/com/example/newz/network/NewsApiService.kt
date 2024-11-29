@@ -1,6 +1,6 @@
-package com.example.newz.newz.network
+package com.example.newz.network
 
-import com.example.newz.newz.models.NewsModel
+import com.example.newz.models.NewsModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers

@@ -1,4 +1,4 @@
-package com.example.newz.newz
+package com.example.newz.activities
 
 import android.os.Bundle
 import android.view.View
@@ -9,16 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newz.R
-import com.example.newz.db.NewsVmDb
-import com.example.newz.newz.adapter.BookmarkAdapter
+import com.example.newz.viewmodels.NewsVmDb
+import com.example.newz.adapter.BookmarkAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BookmarkActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
-    val viewModel: NewsVmDb by viewModels()
-    lateinit var image : ImageView
-    lateinit var textView : TextView
+    private val viewModel: NewsVmDb by viewModels()
+    private lateinit var image : ImageView
+    private lateinit var textView : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bookmark)
@@ -47,10 +47,6 @@ class BookmarkActivity : AppCompatActivity() {
             }
 
         }
-
-
-
-
 
     }
 }

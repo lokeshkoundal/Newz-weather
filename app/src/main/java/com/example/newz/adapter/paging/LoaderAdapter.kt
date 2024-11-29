@@ -1,4 +1,4 @@
-package com.example.newz.newz.adapter.paging
+package com.example.newz.adapter.paging
 
 import android.view.LayoutInflater
 import android.view.View

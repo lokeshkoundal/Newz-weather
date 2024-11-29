@@ -3,8 +3,8 @@ package com.example.newz
 import android.content.Context
 import com.example.newz.db.NewsDB
 import com.example.newz.db.NewsDao
-import com.example.newz.newz.network.NewsApiService
-import com.example.newz.newz.network.RetrofitObj
+import com.example.newz.network.NewsApiService
+import com.example.newz.network.RetrofitObj
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +26,6 @@ object AppModule {
     fun providesRoomDB(@ApplicationContext context: Context): NewsDao {
         return NewsDB.getNewsDao(context)
     }
+
 
 }

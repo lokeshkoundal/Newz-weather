@@ -1,4 +1,4 @@
-package com.example.newz.newz
+package com.example.newz.activities
 
 import android.content.Context
 import android.content.Intent
@@ -10,17 +10,27 @@ import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
-import com.example.newz.db.NewsVmDb
-import com.example.newz.newz.adapter.NewsAdapter
+import com.example.newz.adapter.NewsAdapter
+import com.example.newz.viewmodels.NewsVM
+import com.example.newz.viewmodels.NewsVmDb
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
+private const val COUNTRY_US = "us"
+private const val CATEGORY_GENERAL = "General"
+private const val CATEGORY_BUSINESS = "business"
+private const val CATEGORY_HEALTH = "health"
+private const val CATEGORY_SCIENCE = "science"
+private const val CATEGORY_SPORTS = "sports"
+private const val CATEGORY_ENTERTAINMENT = "entertainment"
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,35 +44,31 @@ class MainActivity : AppCompatActivity() {
 //    private lateinit var vm : NewsVM
     private  val vm: NewsVM by viewModels()
     private  val viewModelRoom: NewsVmDb by viewModels()
+    lateinit var adapter: NewsAdapter
 
     val hashmap = HashMap<String, Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val adapter: NewsAdapter?
         loader = findViewById(R.id.loader)
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
         bookmarkBtn = findViewById(R.id.bookMarkBtn)
 
 
-
-//        vm = NewsVM()
-//        viewModelRoom = ViewModelProvider(this, NewsVMFactory(application))[NewsVmDb::class.java]
+//        viewModelRoom.getAllBookmarkedNews()
 
         vm.currentCategory.observe(this){
             lifecycleScope.launch {
-                vm.getTopHeadlines("us")
+                vm.getTopHeadlines(COUNTRY_US)
             }
         }
 
         if (isInternetAvailable(this)) {
-           vm.currentCategory.value = "general"
+           vm.currentCategory.value = CATEGORY_GENERAL
         } else {
             showNoInternetDialog(this)
         }
-
-        viewModelRoom.getAllBookmarkedNews()
 
         vm.isLoading.observe(this) { isLoading ->
             if (isLoading) {
@@ -81,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
             } else {
                 lifecycleScope.launch {
-                    vm.getTopHeadlines("us")
+                    vm.getTopHeadlines(COUNTRY_US)
                     refreshLayout.isRefreshing = false
                 }
             }
@@ -100,6 +106,8 @@ class MainActivity : AppCompatActivity() {
         chipGroup = findViewById(R.id.chipGroup)
         chipGroup.getChildAt(0).performClick()
 
+
+
         vm.articles.observe(this) {
 //            newsData = it
             adapter.updateData(it)
@@ -108,30 +116,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         chipGroup.getChildAt(0).setOnClickListener {
-            if (vm.currentCategory.value != "general") {
+            if (vm.currentCategory.value != CATEGORY_GENERAL) {
 
                 if (!isInternetAvailable(this)) {
                     it.isSelected = false
                     showNoInternetDialog(this)
                 } else {
-                    vm.currentCategory.value = "general"
+                    vm.currentCategory.value = CATEGORY_GENERAL
                     adapter.notifyDataSetChanged()
                     recyclerView.smoothScrollToPosition(0)
                 }
             }
             else{
                 recyclerView.smoothScrollToPosition(0)
-
             }
         }
 
         chipGroup.getChildAt(1).setOnClickListener {
-            if (vm.currentCategory.value != "business") {
+            if (vm.currentCategory.value != CATEGORY_BUSINESS) {
 
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    vm.currentCategory.value = "business"
+                    vm.currentCategory.value = CATEGORY_BUSINESS
                     adapter.notifyDataSetChanged()
                     recyclerView.smoothScrollToPosition(0)
                 }
@@ -142,12 +149,12 @@ class MainActivity : AppCompatActivity() {
 
             }
         chipGroup.getChildAt(2).setOnClickListener {
-        if (vm.currentCategory.value != "entertainment") {
+        if (vm.currentCategory.value != CATEGORY_ENTERTAINMENT) {
 
             if (!isInternetAvailable(this)) {
                 showNoInternetDialog(this)
             } else {
-                vm.currentCategory.value = "entertainment"
+                vm.currentCategory.value = CATEGORY_ENTERTAINMENT
                 adapter.notifyDataSetChanged()
                 recyclerView.smoothScrollToPosition(0)
             }
@@ -159,12 +166,12 @@ class MainActivity : AppCompatActivity() {
 
         }
         chipGroup.getChildAt(3).setOnClickListener {
-            if (vm.currentCategory.value != "health") {
+            if (vm.currentCategory.value != CATEGORY_HEALTH) {
 
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    vm.currentCategory.value = "health"
+                    vm.currentCategory.value = CATEGORY_HEALTH
                     adapter.notifyDataSetChanged()
                     recyclerView.smoothScrollToPosition(0)
                 }
@@ -176,12 +183,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         chipGroup.getChildAt(4).setOnClickListener {
-            if (vm.currentCategory.value != "science") {
+            if (vm.currentCategory.value != CATEGORY_SCIENCE) {
 
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    vm.currentCategory.value = "science"
+                    vm.currentCategory.value = CATEGORY_SCIENCE
                     adapter.notifyDataSetChanged()
                     recyclerView.smoothScrollToPosition(0)
                 }
@@ -193,12 +200,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         chipGroup.getChildAt(5).setOnClickListener {
-            if (vm.currentCategory.value != "sports") {
+            if (vm.currentCategory.value != CATEGORY_SPORTS) {
 
                 if (!isInternetAvailable(this)) {
                     showNoInternetDialog(this)
                 } else {
-                    vm.currentCategory.value = "sports"
+                    vm.currentCategory.value = CATEGORY_SPORTS
                     adapter.notifyDataSetChanged()
                     recyclerView.smoothScrollToPosition(0)
                 }
@@ -257,6 +264,7 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss() // Close the dialog when the user presses OK
         }
+        builder.setPositiveButtonIcon(AppCompatResources.getDrawable(this,R.drawable.baseline_check_24))
         val dialog = builder.create()
         dialog.show()
     }
@@ -264,7 +272,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-            vm.getTopHeadlines("us")
+//            vm.getTopHeadlines("us")
+            adapter.notifyDataSetChanged()
+
         }
     }
 }

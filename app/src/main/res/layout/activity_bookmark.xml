@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CECECE"
-    tools:context=".newz.BookmarkActivity">
+    tools:context=".activities.BookmarkActivity">
 
     <TextView
         android:id="@+id/textView2"

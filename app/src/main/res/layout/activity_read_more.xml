@@ -8,7 +8,7 @@
     android:layout_margin="8dp"
     android:padding="6dp"
     android:background="@drawable/black_border"
-    tools:context=".newz.ReadMoreActivity">
+    tools:context=".activities.ReadMoreActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"

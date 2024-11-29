@@ -18,14 +18,14 @@
         android:theme="@style/Theme.Newz"
         tools:targetApi="31">
         <activity
-            android:name=".newz.BookmarkActivity"
+            android:name=".activities.BookmarkActivity"
             android:exported="false" />
         <activity
-            android:name=".newz.ReadMoreActivity"
+            android:name=".activities.ReadMoreActivity"
             android:exported="false" />
 
         <activity
-            android:name=".newz.MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

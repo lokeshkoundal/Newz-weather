@@ -1,4 +1,4 @@
-package com.example.newz.newz.adapter
+package com.example.newz.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,27 +10,24 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
+import com.example.newz.activities.ReadMoreActivity
+import com.example.newz.adapter.NewsAdapter.Companion.hashmap
 import com.example.newz.db.News
-import com.example.newz.db.NewsVmDb
-import com.example.newz.newz.ReadMoreActivity
-import com.example.newz.newz.adapter.NewsAdapter.Companion.hashmap
+import com.example.newz.viewmodels.NewsVmDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Context, private var viewModel: NewsVmDb) : RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder>(){
-
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BookmarkViewHolder {
         val view : View = LayoutInflater.from(parent.context).inflate(R.layout.article_rv, parent, false)
-
         return BookmarkViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: BookmarkAdapter.BookmarkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
 
         holder.bookmarkToggle.isSelected = true
 
@@ -70,13 +67,9 @@ class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Conte
 //                    news.id?.let { it1 -> viewModel.deleteBookmarkedNews(it1) }
                     viewModel.deleteBookmarkedNewsByTitle(currentItem.title)
                     it.isSelected = false
-                    hashmap[currentItem.title]=false
-
-
-
+                    hashmap[currentItem.title] = false
                 }
             }
-
         }
 
         holder.readMore.setOnClickListener(){
