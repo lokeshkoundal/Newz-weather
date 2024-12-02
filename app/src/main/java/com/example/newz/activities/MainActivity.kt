@@ -218,7 +218,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         bookmarkBtn.setOnClickListener {
-            val intent = Intent(this, BookmarkActivity::class.java)
+//            val intent = Intent(this, BookmarkActivity::class.java)
+//            startActivity(intent)
+            val intent = Intent(this, FlowsActivity::class.java)
             startActivity(intent)
         }
 
