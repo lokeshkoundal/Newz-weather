@@ -11,10 +11,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
-import com.example.newz.db.News
-import com.example.newz.viewmodels.NewsVmDb
 import com.example.newz.activities.ReadMoreActivity
+import com.example.newz.db.News
 import com.example.newz.models.NewsModel
+import com.example.newz.viewmodels.NewsVmDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -120,7 +120,7 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
 
         }
 
-        holder.readMore.setOnClickListener(){
+        holder.readMore.setOnClickListener {
             val intent = Intent(context, ReadMoreActivity::class.java)
             intent.putExtra("title", currentItem?.title)
             intent.putExtra("content", currentItem?.content)

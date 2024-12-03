@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -16,9 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
-import com.example.newz.adapter.NewsAdapter
-import com.example.newz.viewmodels.NewsVM
-import com.example.newz.viewmodels.NewsVmDb
+import com.example.newz.paging.PagingAdapter
+import com.example.newz.viewmodels.PagerVM
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,13 +38,14 @@ class MainActivity : AppCompatActivity() {
 //    private  var newsData: NewsModel? = null
     private lateinit var loader: ProgressBar
     private lateinit var refreshLayout: SwipeRefreshLayout
-//    private lateinit var  viewModelRoom :NewsVmDb
-//    private lateinit var vm : NewsVM
-    private  val vm: NewsVM by viewModels()
-    private  val viewModelRoom: NewsVmDb by viewModels()
-    lateinit var adapter: NewsAdapter
 
-    val hashmap = HashMap<String, Boolean>()
+//    private  val vm: NewsVM by viewModels()
+//    private  val viewModelRoom: NewsVmDb by viewModels()
+//    lateinit var adapter: NewsAdapter
+
+
+    lateinit var pagingAdapter : PagingAdapter
+    private val pagingVM : PagerVM by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,167 +54,180 @@ class MainActivity : AppCompatActivity() {
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
         bookmarkBtn = findViewById(R.id.bookMarkBtn)
 
+        recyclerView = findViewById(R.id.recyclerView)
+        pagingAdapter = PagingAdapter(this)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = pagingAdapter
+
+        lifecycleScope.launch {
+            pagingVM.list.collect{
+                pagingAdapter.submitData(it)
+            }
+        }
+
+
+
 
 //        viewModelRoom.getAllBookmarkedNews()
 
-        vm.currentCategory.observe(this){
-            lifecycleScope.launch {
-                vm.getTopHeadlines(COUNTRY_US)
-            }
-        }
-
-        if (isInternetAvailable(this)) {
-           vm.currentCategory.value = CATEGORY_GENERAL
-        } else {
-            showNoInternetDialog(this)
-        }
-
-        vm.isLoading.observe(this) { isLoading ->
-            if (isLoading) {
-                loader.visibility = View.VISIBLE
-                recyclerView.visibility = View.GONE
-            } else {
-                loader.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
-            }
-        }
-
-        refreshLayout.setOnRefreshListener {
-            if (!isInternetAvailable(this)) {
-                showNoInternetDialog(this)
-                refreshLayout.isRefreshing = false
-
-            } else {
-                lifecycleScope.launch {
-                    vm.getTopHeadlines(COUNTRY_US)
-                    refreshLayout.isRefreshing = false
-                }
-            }
-
-        }
-
-        recyclerView = findViewById(R.id.recyclerView)
-
-
-
-        adapter = NewsAdapter(vm.articles, this,viewModelRoom)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
-
-        chipGroup = findViewById(R.id.chipGroup)
-        chipGroup.getChildAt(0).performClick()
-
-
-
-        vm.articles.observe(this) {
-//            newsData = it
-            adapter.updateData(it)
-            adapter.notifyDataSetChanged()
-
-        }
-
-        chipGroup.getChildAt(0).setOnClickListener {
-            if (vm.currentCategory.value != CATEGORY_GENERAL) {
-
-                if (!isInternetAvailable(this)) {
-                    it.isSelected = false
-                    showNoInternetDialog(this)
-                } else {
-                    vm.currentCategory.value = CATEGORY_GENERAL
-                    adapter.notifyDataSetChanged()
-                    recyclerView.smoothScrollToPosition(0)
-                }
-            }
-            else{
-                recyclerView.smoothScrollToPosition(0)
-            }
-        }
-
-        chipGroup.getChildAt(1).setOnClickListener {
-            if (vm.currentCategory.value != CATEGORY_BUSINESS) {
-
-                if (!isInternetAvailable(this)) {
-                    showNoInternetDialog(this)
-                } else {
-                    vm.currentCategory.value = CATEGORY_BUSINESS
-                    adapter.notifyDataSetChanged()
-                    recyclerView.smoothScrollToPosition(0)
-                }
-            }
-            else{
-                recyclerView.smoothScrollToPosition(0)
-            }
-
-            }
-        chipGroup.getChildAt(2).setOnClickListener {
-        if (vm.currentCategory.value != CATEGORY_ENTERTAINMENT) {
-
-            if (!isInternetAvailable(this)) {
-                showNoInternetDialog(this)
-            } else {
-                vm.currentCategory.value = CATEGORY_ENTERTAINMENT
-                adapter.notifyDataSetChanged()
-                recyclerView.smoothScrollToPosition(0)
-            }
-        }
-        else{
-            recyclerView.smoothScrollToPosition(0)
-
-        }
-
-        }
-        chipGroup.getChildAt(3).setOnClickListener {
-            if (vm.currentCategory.value != CATEGORY_HEALTH) {
-
-                if (!isInternetAvailable(this)) {
-                    showNoInternetDialog(this)
-                } else {
-                    vm.currentCategory.value = CATEGORY_HEALTH
-                    adapter.notifyDataSetChanged()
-                    recyclerView.smoothScrollToPosition(0)
-                }
-
-            }
-            else{
-                recyclerView.smoothScrollToPosition(0)
-
-            }
-        }
-        chipGroup.getChildAt(4).setOnClickListener {
-            if (vm.currentCategory.value != CATEGORY_SCIENCE) {
-
-                if (!isInternetAvailable(this)) {
-                    showNoInternetDialog(this)
-                } else {
-                    vm.currentCategory.value = CATEGORY_SCIENCE
-                    adapter.notifyDataSetChanged()
-                    recyclerView.smoothScrollToPosition(0)
-                }
-
-            }
-            else{
-                recyclerView.scrollToPosition(0)
-
-            }
-        }
-        chipGroup.getChildAt(5).setOnClickListener {
-            if (vm.currentCategory.value != CATEGORY_SPORTS) {
-
-                if (!isInternetAvailable(this)) {
-                    showNoInternetDialog(this)
-                } else {
-                    vm.currentCategory.value = CATEGORY_SPORTS
-                    adapter.notifyDataSetChanged()
-                    recyclerView.smoothScrollToPosition(0)
-                }
-
-            }
-            else{
-                recyclerView.smoothScrollToPosition(0)
-
-            }
-        }
+//        vm.currentCategory.observe(this){
+//            lifecycleScope.launch {
+//                vm.getTopHeadlines(COUNTRY_US,1)
+//            }
+//        }
+//
+//        if (isInternetAvailable(this)) {
+//           vm.currentCategory.value = CATEGORY_GENERAL
+//        } else {
+//            showNoInternetDialog(this)
+//        }
+//
+//        vm.isLoading.observe(this) { isLoading ->
+//            if (isLoading) {
+//                loader.visibility = View.VISIBLE
+//                recyclerView.visibility = View.GONE
+//            } else {
+//                loader.visibility = View.GONE
+//                recyclerView.visibility = View.VISIBLE
+//            }
+//        }
+//
+//        refreshLayout.setOnRefreshListener {
+//            if (!isInternetAvailable(this)) {
+//                showNoInternetDialog(this)
+//                refreshLayout.isRefreshing = false
+//
+//            } else {
+//                lifecycleScope.launch {
+//                    vm.getTopHeadlines(COUNTRY_US,1)
+//                    refreshLayout.isRefreshing = false
+//                }
+//            }
+//
+//        }
+//
+//        recyclerView = findViewById(R.id.recyclerView)
+//
+//
+//
+//        adapter = NewsAdapter(vm.articles, this,viewModelRoom)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.setHasFixedSize(true)
+//        recyclerView.adapter = adapter
+//
+//        chipGroup = findViewById(R.id.chipGroup)
+//        chipGroup.getChildAt(0).performClick()
+//
+//
+//
+//        vm.articles.observe(this) {
+////            newsData = it
+//            adapter.updateData(it)
+//            adapter.notifyDataSetChanged()
+//
+//        }
+//
+//        chipGroup.getChildAt(0).setOnClickListener {
+//            if (vm.currentCategory.value != CATEGORY_GENERAL) {
+//
+//                if (!isInternetAvailable(this)) {
+//                    it.isSelected = false
+//                    showNoInternetDialog(this)
+//                } else {
+//                    vm.currentCategory.value = CATEGORY_GENERAL
+//                    adapter.notifyDataSetChanged()
+//                    recyclerView.smoothScrollToPosition(0)
+//                }
+//            }
+//            else{
+//                recyclerView.smoothScrollToPosition(0)
+//            }
+//        }
+//
+//        chipGroup.getChildAt(1).setOnClickListener {
+//            if (vm.currentCategory.value != CATEGORY_BUSINESS) {
+//
+//                if (!isInternetAvailable(this)) {
+//                    showNoInternetDialog(this)
+//                } else {
+//                    vm.currentCategory.value = CATEGORY_BUSINESS
+//                    adapter.notifyDataSetChanged()
+//                    recyclerView.smoothScrollToPosition(0)
+//                }
+//            }
+//            else{
+//                recyclerView.smoothScrollToPosition(0)
+//            }
+//
+//            }
+//        chipGroup.getChildAt(2).setOnClickListener {
+//        if (vm.currentCategory.value != CATEGORY_ENTERTAINMENT) {
+//
+//            if (!isInternetAvailable(this)) {
+//                showNoInternetDialog(this)
+//            } else {
+//                vm.currentCategory.value = CATEGORY_ENTERTAINMENT
+//                adapter.notifyDataSetChanged()
+//                recyclerView.smoothScrollToPosition(0)
+//            }
+//        }
+//        else{
+//            recyclerView.smoothScrollToPosition(0)
+//        }
+//        }
+//        chipGroup.getChildAt(3).setOnClickListener {
+//            if (vm.currentCategory.value != CATEGORY_HEALTH) {
+//
+//                if (!isInternetAvailable(this)) {
+//                    showNoInternetDialog(this)
+//                } else {
+//                    vm.currentCategory.value = CATEGORY_HEALTH
+//                    adapter.notifyDataSetChanged()
+//                    recyclerView.smoothScrollToPosition(0)
+//                }
+//
+//            }
+//            else{
+//                recyclerView.smoothScrollToPosition(0)
+//
+//            }
+//        }
+//        chipGroup.getChildAt(4).setOnClickListener {
+//            if (vm.currentCategory.value != CATEGORY_SCIENCE) {
+//
+//                if (!isInternetAvailable(this)) {
+//                    showNoInternetDialog(this)
+//                } else {
+//                    vm.currentCategory.value = CATEGORY_SCIENCE
+//                    adapter.notifyDataSetChanged()
+//                    recyclerView.smoothScrollToPosition(0)
+//                }
+//
+//            }
+//            else{
+//                recyclerView.scrollToPosition(0)
+//
+//            }
+//        }
+//        chipGroup.getChildAt(5).setOnClickListener {
+//            if (vm.currentCategory.value != CATEGORY_SPORTS) {
+//
+//                if (!isInternetAvailable(this)) {
+//                    showNoInternetDialog(this)
+//                } else {
+//                    vm.currentCategory.value = CATEGORY_SPORTS
+//                    adapter.notifyDataSetChanged()
+//                    recyclerView.smoothScrollToPosition(0)
+//                }
+//
+//            }
+//            else{
+//                recyclerView.smoothScrollToPosition(0)
+//
+//            }
+//        }
 
         bookmarkBtn.setOnClickListener {
 //            val intent = Intent(this, BookmarkActivity::class.java)
@@ -271,12 +283,12 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launch {
-//            vm.getTopHeadlines("us")
-            adapter.notifyDataSetChanged()
-
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        lifecycleScope.launch {
+////            vm.getTopHeadlines("us")
+//            adapter.notifyDataSetChanged()
+//
+//        }
+//    }
 }

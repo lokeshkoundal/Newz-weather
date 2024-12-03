@@ -20,12 +20,12 @@ class NewsVM @Inject constructor(private val newsApiService: NewsApiService): Vi
     var currentCategory = MutableLiveData("general")
 
     @SuppressLint("NullSafeMutableLiveData")
-    suspend fun getTopHeadlines(country: String) {
+    suspend fun getTopHeadlines(country: String,page : Int) {
         _isLoading.value = true
 
         try {
             val data: NewsModel? =
-                currentCategory.value?.let { newsApiService.getTopHeadlines(country, it).body() }
+                currentCategory.value?.let { newsApiService.getTopHeadlines(country, it,page).body() }
             if (data != null) {
                 articles.value = data
             }
