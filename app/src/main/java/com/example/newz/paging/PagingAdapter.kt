@@ -13,10 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
 import com.example.newz.activities.ReadMoreActivity
+import com.example.newz.db.News
 import com.example.newz.models.Article
+import com.example.newz.viewmodels.NewsVmDb
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-class PagingAdapter(private var context : Context) : PagingDataAdapter<Article,PagingAdapter.PagingViewHolder>(COMPARATOR){
+class PagingAdapter(private var context : Context, private var viewModel: NewsVmDb) : PagingDataAdapter<Article,PagingAdapter.PagingViewHolder>(COMPARATOR){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagingViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_rv,parent,false)
@@ -25,6 +30,9 @@ class PagingAdapter(private var context : Context) : PagingDataAdapter<Article,P
 
     override fun onBindViewHolder(holder: PagingViewHolder, position: Int) {
         val item = getItem(position)
+
+        holder.bookmarkToggle.isSelected = hashmap[item?.title] == true
+
         holder.title.text = item?.title
         holder.metaa.text = item?.publishedAt
         holder.description.text = item?.description
@@ -45,13 +53,48 @@ class PagingAdapter(private var context : Context) : PagingDataAdapter<Article,P
             intent.putExtra("image",item?.urlToImage)
             context.startActivity(intent)
         }
+
         holder.bookmarkToggle.setOnClickListener {
-            // Handle bookmark toggle click
+            val news: News?
+
+            if(!it.isSelected){
+                news = item?.let { it1 ->
+                    News(null,it1.author?:"",
+                        it1.content?:"",it1.description,it1.publishedAt,it1.source.toString(),it1.title,it1.url,it1.urlToImage)
+                }
+
+                if (news != null) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.insertBookmarkedNews(news)
+                        if (item != null) {
+                            hashmap[item.title]=true
+                        }
+                        it.isSelected = true
+                        if(item?.title!=null){
+                            hashmap[item.title]=true
+                        }
+                    }
+
+                }
+            }
+            else{ CoroutineScope(Dispatchers.IO).launch {
+                item?.title?.let { it1 ->
+                    viewModel.deleteBookmarkedNewsByTitle(it1)
+                    hashmap[item.title]= false
+                    it.isSelected = false
+                    hashmap[item.title]=false
+                }
+            }
+            }
+
         }
 
     }
 
     companion object{
+
+        val hashmap:HashMap<String,Boolean> = hashMapOf()
+
         private val COMPARATOR = object : DiffUtil.ItemCallback<Article>(){
             override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
                 return oldItem.title == newItem.title

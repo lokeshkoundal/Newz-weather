@@ -87,8 +87,6 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
 
         }
 
-
-
         holder.bookmarkToggle.setOnClickListener {
             var news: News? = null
 
@@ -117,7 +115,6 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
                  }
                 }
             }
-
         }
 
         holder.readMore.setOnClickListener {
@@ -139,8 +136,6 @@ class NewsAdapter(private var items : MutableLiveData<NewsModel>, private  var c
         val readMore : TextView = itemView.findViewById(R.id.readMoreButton)
         val author :TextView = itemView.findViewById(R.id.author)
         val bookmarkToggle:ImageView = itemView.findViewById(R.id.bookmark)
-
-        
 
     }
 }

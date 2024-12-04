@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -15,11 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
+import com.example.newz.paging.NewzPagingSource
+import com.example.newz.paging.PagerVM
 import com.example.newz.paging.PagingAdapter
-import com.example.newz.viewmodels.PagerVM
+import com.example.newz.viewmodels.NewsVmDb
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 private const val COUNTRY_US = "us"
@@ -40,12 +44,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var refreshLayout: SwipeRefreshLayout
 
 //    private  val vm: NewsVM by viewModels()
-//    private  val viewModelRoom: NewsVmDb by viewModels()
+    private  val viewModelRoom: NewsVmDb by viewModels()
 //    lateinit var adapter: NewsAdapter
 
 
-    lateinit var pagingAdapter : PagingAdapter
+    private lateinit var pagingAdapter : PagingAdapter
     private val pagingVM : PagerVM by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,21 +58,147 @@ class MainActivity : AppCompatActivity() {
         loader = findViewById(R.id.loader)
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
         bookmarkBtn = findViewById(R.id.bookMarkBtn)
+        chipGroup = findViewById(R.id.chipGroup)
+
 
         recyclerView = findViewById(R.id.recyclerView)
-        pagingAdapter = PagingAdapter(this)
+        pagingAdapter = PagingAdapter(this,viewModelRoom)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = pagingAdapter
 
-        lifecycleScope.launch {
-            pagingVM.list.collect{
-                pagingAdapter.submitData(it)
+        refreshLayout.isEnabled = false
+
+//        lifecycleScope.launch {
+//            pagingVM.list.collect{
+//                pagingAdapter.submitData(it)
+//            }
+//        }
+
+
+//        pagingVM.category.value = CATEGORY_GENERAL
+        chipGroup.getChildAt(0).performClick()
+        pagingVM.getHeadLines()
+
+        pagingVM.category.observe(this){
+            pagingVM.getHeadLines()
+            lifecycleScope.launch {
+                pagingVM.list.collectLatest{
+                    pagingAdapter.submitData(it)
+                    pagingAdapter.notifyDataSetChanged()
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+        }
+
+        NewzPagingSource._isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                loader.visibility = View.VISIBLE
+            } else {
+                loader.visibility = View.GONE
+            }
+        }
+
+//        --------------------------------------------------------
+
+
+        chipGroup.getChildAt(0).setOnClickListener {
+            if (pagingVM.category.value != CATEGORY_GENERAL) {
+
+                if (!isInternetAvailable(this)) {
+                    it.isSelected = false
+                    showNoInternetDialog(this)
+
+                } else {
+                    pagingVM.category.value = CATEGORY_GENERAL
+                }
+            }
+            else{
+                recyclerView.smoothScrollToPosition(0)
+            }
+        }
+
+        chipGroup.getChildAt(1).setOnClickListener {
+            if (pagingVM.category.value != CATEGORY_BUSINESS) {
+
+                if (!isInternetAvailable(this)) {
+                    showNoInternetDialog(this)
+                } else {
+                    pagingVM.category.value = CATEGORY_BUSINESS
+                }
+            }
+            else{
+                recyclerView.smoothScrollToPosition(0)
+            }
+
+            }
+        chipGroup.getChildAt(2).setOnClickListener {
+        if (pagingVM.category.value != CATEGORY_ENTERTAINMENT) {
+
+            if (!isInternetAvailable(this)) {
+                showNoInternetDialog(this)
+            } else {
+                pagingVM.category.value = CATEGORY_ENTERTAINMENT
+            }
+        }
+        else{
+            recyclerView.smoothScrollToPosition(0)
+        }
+        }
+        chipGroup.getChildAt(3).setOnClickListener {
+            if (pagingVM.category.value != CATEGORY_HEALTH) {
+
+                if (!isInternetAvailable(this)) {
+                    showNoInternetDialog(this)
+                } else {
+                    pagingVM.category.value = CATEGORY_HEALTH
+                }
+
+            }
+            else{
+                recyclerView.smoothScrollToPosition(0)
+
+            }
+        }
+        chipGroup.getChildAt(4).setOnClickListener {
+            if (pagingVM.category.value != CATEGORY_SCIENCE) {
+
+                if (!isInternetAvailable(this)) {
+                    showNoInternetDialog(this)
+                } else {
+                    pagingVM.category.value = CATEGORY_SCIENCE
+                }
+
+            }
+            else{
+                recyclerView.scrollToPosition(0)
+
+            }
+        }
+        chipGroup.getChildAt(5).setOnClickListener {
+            if (pagingVM.category.value != CATEGORY_SPORTS) {
+
+                if (!isInternetAvailable(this)) {
+                    showNoInternetDialog(this)
+                } else {
+                    pagingVM.category.value = CATEGORY_SPORTS
+                }
+
+            }
+            else{
+                recyclerView.smoothScrollToPosition(0)
+
             }
         }
 
 
+
+
+
+
+
+//      -------------------------------------------------------------------------
 
 
 //        viewModelRoom.getAllBookmarkedNews()
@@ -230,10 +361,10 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         bookmarkBtn.setOnClickListener {
-//            val intent = Intent(this, BookmarkActivity::class.java)
-//            startActivity(intent)
-            val intent = Intent(this, FlowsActivity::class.java)
+            val intent = Intent(this, BookmarkActivity::class.java)
             startActivity(intent)
+//            val intent = Intent(this, FlowsActivity::class.java)
+//            startActivity(intent)
         }
 
 
@@ -283,12 +414,11 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        lifecycleScope.launch {
-////            vm.getTopHeadlines("us")
-//            adapter.notifyDataSetChanged()
-//
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            pagingAdapter.notifyDataSetChanged()
+
+        }
+    }
 }
