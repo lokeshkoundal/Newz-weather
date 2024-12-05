@@ -17,10 +17,11 @@ import javax.inject.Inject
 class PagerVM @Inject constructor(private val newsApiService: NewsApiService): ViewModel() {
 
      var category : MutableLiveData<String> = MutableLiveData("general")
-     lateinit  var list : Flow<PagingData<Article>>
+//     lateinit  var list : Flow<PagingData<Article>>
 
-     fun getHeadLines() {
-         list =  Pager(config = PagingConfig(pageSize = 10, maxSize = 100, prefetchDistance = 1),
+     fun getHeadLines(): Flow<PagingData<Article>> {
+
+          return Pager(config = PagingConfig(pageSize = 10, maxSize = 100, prefetchDistance = 10),
             pagingSourceFactory = { category.value?.let { NewzPagingSource(newsApiService, it) }!! }
         ).flow.cachedIn(viewModelScope)
 

@@ -9,14 +9,15 @@ import com.example.newz.network.NewsApiService
 class NewzPagingSource(private val newsApiService: NewsApiService, private var category : String) : PagingSource<Int,Article>() {
 
     companion object{
-        val _isLoading = MutableLiveData(true)
+        val isLoading = MutableLiveData(true)
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         try{
-            _isLoading.value = true
-            val pageNumber   = params.key?:0
+            isLoading.value = true
+            val pageNumber = params.key?:1
             val response = newsApiService.getTopHeadlines("us", category,pageNumber).body()
+//            response?.articles = response?.articles?.filter { it.title != "[Removed]" }!!
 
             return response.let {
                 it?.let { it1 ->
@@ -26,18 +27,16 @@ class NewzPagingSource(private val newsApiService: NewsApiService, private var c
                         nextKey = if (pageNumber == response?.totalResults) null else pageNumber+1)
                 }
                 }!!.also {
-                _isLoading.value = false
+                isLoading.value = false
             }
         }
         catch (e:Exception){
-            _isLoading.value = false
+            isLoading.value = false
             return LoadResult.Error(e)
 
         }
 
     }
-
-
 
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
         return state.anchorPosition?.let {
@@ -45,5 +44,4 @@ class NewzPagingSource(private val newsApiService: NewsApiService, private var c
                     ?:state.closestPageToPosition(it)?.nextKey?.minus(1)
             }
         }
-
 }

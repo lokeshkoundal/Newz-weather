@@ -1,4 +1,4 @@
-package com.example.newz.network
+package com.example.newz
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

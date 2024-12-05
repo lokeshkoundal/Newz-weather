@@ -17,6 +17,7 @@ In summary, Kotlin is a powerful, versatile language that offers significant adv
     <string name="science">Science</string>
     <string name="sports">Sports</string>
     <string name="saved_news">saved news</string>
+    <string name="select_the_category">Select the Category</string>
 
 
 </resources>

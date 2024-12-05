@@ -68,31 +68,49 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = pagingAdapter
 
-        refreshLayout.isEnabled = false
+        chipGroup.getChildAt(0).performClick()
 
-//        lifecycleScope.launch {
-//            pagingVM.list.collect{
-//                pagingAdapter.submitData(it)
-//            }
-//        }
+
+        refreshLayout.setOnRefreshListener {
+            if (!isInternetAvailable(this)) {
+                showNoInternetDialog(this)
+                refreshLayout.isRefreshing = false
+
+            } else {
+                lifecycleScope.launch {
+                    if(pagingAdapter.itemCount>0){
+                        pagingAdapter.refresh()
+                    }
+                   else{
+                       chipGroup.getChildAt(0).performClick()
+                    }
+                    refreshLayout.isRefreshing = false
+                }
+            }
+
+        }
 
 
 //        pagingVM.category.value = CATEGORY_GENERAL
-        chipGroup.getChildAt(0).performClick()
-        pagingVM.getHeadLines()
+//        pagingVM.getHeadLines()
 
         pagingVM.category.observe(this){
-            pagingVM.getHeadLines()
-            lifecycleScope.launch {
-                pagingVM.list.collectLatest{
-                    pagingAdapter.submitData(it)
-                    pagingAdapter.notifyDataSetChanged()
-                    recyclerView.scrollToPosition(0)
+            if(isInternetAvailable(this)) {
+//                pagingVM.getHeadLines()
+                lifecycleScope.launch {
+                    pagingVM.getHeadLines().collectLatest {
+                        pagingAdapter.submitData(it)
+                        recyclerView.scrollToPosition(0)
+//                        pagingAdapter.notifyDataSetChanged()
+                    }
                 }
+            }
+            else{
+                showNoInternetDialog(this)
             }
         }
 
-        NewzPagingSource._isLoading.observe(this) { isLoading ->
+        NewzPagingSource.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 loader.visibility = View.VISIBLE
             } else {
@@ -172,7 +190,7 @@ class MainActivity : AppCompatActivity() {
 
             }
             else{
-                recyclerView.scrollToPosition(0)
+                recyclerView.smoothScrollToPosition(0)
 
             }
         }

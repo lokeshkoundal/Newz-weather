@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface NewsApiService {
 
-    @Headers("Authorization: 2d55feb44c4845f4a22d18041deaba12")
+    @Headers("Authorization: a69974cf3c4c4f6a9793d9fca27cc77d")
     @GET("/v2/top-headlines?pageSize=10")
     suspend fun getTopHeadlines(
         @Query("country") country: String,
