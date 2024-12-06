@@ -38,15 +38,12 @@ android {
 
 dependencies {
 
-//    Hilt
-//    implementation(libs.dagger.hilt.android.gradle.plugin)
-//    implementation(libs.hilt.android)
-//    kapt(libs.hilt.compiler)
-////    kapt(libs.hilt.core)
-//    implementation (libs.androidx.hilt.lifecycle.viewmodel)
-//    kapt (libs.androidx.hilt.compiler)
+//  workManager
+    implementation(libs.androidx.work.runtime.ktx)
+
 
     implementation(libs.dagger.hilt.android)
+    implementation(libs.androidx.hilt.common)
     kapt(libs.hilt.android.compiler)
 
 
