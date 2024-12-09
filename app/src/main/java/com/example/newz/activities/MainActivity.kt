@@ -26,7 +26,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-private const val COUNTRY_US = "us"
 private const val CATEGORY_GENERAL = "General"
 private const val CATEGORY_BUSINESS = "business"
 private const val CATEGORY_HEALTH = "health"
@@ -78,9 +77,12 @@ class MainActivity : AppCompatActivity() {
 
             } else {
                 lifecycleScope.launch {
+
+
                     if(pagingAdapter.itemCount>0){
                         pagingAdapter.refresh()
                     }
+
                    else{
                        chipGroup.getChildAt(0).performClick()
                     }
@@ -125,7 +127,6 @@ class MainActivity : AppCompatActivity() {
             if (pagingVM.category.value != CATEGORY_GENERAL) {
 
                 if (!isInternetAvailable(this)) {
-                    it.isSelected = false
                     showNoInternetDialog(this)
 
                 } else {
@@ -145,12 +146,11 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     pagingVM.category.value = CATEGORY_BUSINESS
                 }
-            }
-            else{
+            } else {
                 recyclerView.smoothScrollToPosition(0)
             }
+        }
 
-            }
         chipGroup.getChildAt(2).setOnClickListener {
         if (pagingVM.category.value != CATEGORY_ENTERTAINMENT) {
 
@@ -164,6 +164,7 @@ class MainActivity : AppCompatActivity() {
             recyclerView.smoothScrollToPosition(0)
         }
         }
+
         chipGroup.getChildAt(3).setOnClickListener {
             if (pagingVM.category.value != CATEGORY_HEALTH) {
 

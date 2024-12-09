@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
+    android:background="@drawable/ic_day"
     tools:context=".NavigationActivity">
 
 
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
         android:text="@string/select_the_category"
+        android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -29,9 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_bg"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="sans-serif"
         android:drawableStart="@drawable/ic_news"
-        android:text="News"
+        android:text="@string/news"
+        android:textColor="@color/black"
         android:paddingHorizontal="10dp"
         android:textStyle="bold"
         android:layout_marginBottom="20dp"
@@ -47,6 +50,7 @@
         android:background="@drawable/btn_bg"
         android:fontFamily="@font/poppins"
         android:text="Weather"
+        android:textColor="@color/black"
         android:drawableStart="@drawable/ic_sun"
         android:layout_marginTop="20dp"
         android:paddingHorizontal="10dp"

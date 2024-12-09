@@ -9,8 +9,8 @@ import retrofit2.http.Query
 
 interface WeatherApiService {
 
-    @Headers("Authorization: fc97ee6850a54a7192890610240612")
-    @GET("/current.json")
+    @Headers("key: fc97ee6850a54a7192890610240612")
+    @GET("current.json")
     suspend fun getWeatherData(
         @Query("q") city : String
     ) : Response<Weather>

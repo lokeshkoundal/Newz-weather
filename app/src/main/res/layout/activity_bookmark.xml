@@ -16,8 +16,7 @@
         android:fontFamily="@font/alike_angular"
         android:gravity="center"
         android:layout_margin="6dp"
-        android:text="Bookmarked Newzz"
-
+        android:text="Bookmarked News"
         android:textColor="@color/black"
         android:textSize="32dp"
         app:layout_constraintEnd_toEndOf="parent"

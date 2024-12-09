@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.newz.db.NewsDB
 import com.example.newz.db.NewsDao
 import com.example.newz.network.NewsApiService
+import com.example.newz.weather.db.WeatherDB
+import com.example.newz.weather.db.WeatherDao
 import com.example.newz.weather.network.WeatherApiService
 import dagger.Module
 import dagger.Provides
@@ -23,7 +25,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesRoomDB(@ApplicationContext context: Context): NewsDao {
+    fun providesNewsRoomDB(@ApplicationContext context: Context): NewsDao {
         return NewsDB.getNewsDao(context)
     }
 
@@ -31,6 +33,12 @@ object AppModule {
     @Singleton
     fun providesWeatherApiService(): WeatherApiService {
         return RetrofitObj.weatherAPI.create(WeatherApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWeatherRoomDB(@ApplicationContext context: Context): WeatherDao {
+        return WeatherDB.getWeatherDao(context)
     }
 
 
