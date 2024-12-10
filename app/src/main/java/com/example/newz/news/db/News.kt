@@ -1,4 +1,4 @@
-package com.example.newz.db
+package com.example.newz.news.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

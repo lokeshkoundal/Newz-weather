@@ -21,13 +21,6 @@ class MyApp : Application() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        //oneTimeWork:
-
-//        val oneTimeWorkRequest = OneTimeWorkRequestBuilder<WeatherWorker>()
-//            .setConstraints(constraints)
-//            .build()
-//
-//        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest)
 
         //periodic request : work will be executed periodically : With constraints
         val periodicWorkRequest = PeriodicWorkRequestBuilder<WeatherWorker>(30, TimeUnit.MINUTES)
@@ -39,6 +32,16 @@ class MyApp : Application() {
             ExistingPeriodicWorkPolicy.KEEP,
             periodicWorkRequest
         )
+
+        //oneTimeWork:
+
+//        val oneTimeWorkRequest = OneTimeWorkRequestBuilder<WeatherWorker>()
+//            .setConstraints(constraints)
+//            .build()
+//
+//        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest)
+
+
 
 //        WorkManager.getInstance(this).enqueue(periodicWorkRequest)
 

@@ -2,9 +2,14 @@ plugins{
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
-//    id("androidx.navigation.safeargs") version "2.8.4"
+//    id("androidx.navigation.safeargs")
+    id("androidx.navigation.safeargs.kotlin")
+//    id("androidx.navigation.safeargs")
+
+
     id ("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "2.0.21"
 
 }
 
@@ -48,7 +53,7 @@ dependencies {
 
 
     implementation(libs.androidx.paging.runtime.ktx)
-    
+
     implementation (libs.glide)
 
     implementation(libs.androidx.room.runtime)
@@ -56,9 +61,11 @@ dependencies {
     implementation(libs.symbol.processing.api)
 
     // Views/Fragments integration
-    implementation(libs.androidx.navigation.fragment)
-    kapt(libs.androidx.room.compiler)
+//    implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.fragment.ktx) // Replace with your version
+
+    kapt(libs.androidx.room.compiler)
 
     // To use Kotlin Symbol Processing (KSP)
 //    kapt(libs.androidx.room.compiler)

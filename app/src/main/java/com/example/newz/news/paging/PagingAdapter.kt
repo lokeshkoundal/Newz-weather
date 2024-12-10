@@ -1,4 +1,4 @@
-package com.example.newz.paging
+package com.example.newz.news.paging
 
 import android.content.Context
 import android.content.Intent
@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
-import com.example.newz.activities.ReadMoreActivity
-import com.example.newz.db.News
-import com.example.newz.models.Article
-import com.example.newz.viewmodels.NewsVmDb
+import com.example.newz.news.activities.ReadMoreActivity
+import com.example.newz.news.db.News
+import com.example.newz.news.models.Article
+import com.example.newz.news.viewmodels.NewsVmDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +25,9 @@ import java.util.Locale
 import java.util.TimeZone
 
 
-class PagingAdapter(private var context : Context, private var viewModel: NewsVmDb) : PagingDataAdapter<Article,PagingAdapter.PagingViewHolder>(COMPARATOR){
+class PagingAdapter(private var context : Context, private var viewModel: NewsVmDb) : PagingDataAdapter<Article, PagingAdapter.PagingViewHolder>(
+    COMPARATOR
+){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagingViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_rv,parent,false)

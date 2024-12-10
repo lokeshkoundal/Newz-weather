@@ -58,4 +58,20 @@
         app:layout_constraintTop_toBottomOf="@+id/btnNews"
         tools:layout_editor_absoluteX="10dp" />
 
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:drawableStart="@drawable/ic_sun"
+        android:fontFamily="@font/poppins"
+        android:paddingHorizontal="10dp"
+        android:text="Navigation component"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/btnWeather"
+        tools:layout_editor_absoluteX="10dp" />
+
   </androidx.constraintlayout.widget.ConstraintLayout>

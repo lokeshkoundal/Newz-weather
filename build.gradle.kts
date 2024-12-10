@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     id("com.google.devtools.ksp") version "2.0.21-1.0.27" apply false
     id("com.google.dagger.hilt.android") version "2.48.1" apply false
+    id("androidx.navigation.safeargs.kotlin") version "2.8.4" apply false
+
 
 
 
@@ -13,10 +15,9 @@ buildscript {
 //        google()
 //        mavenCentral()
 //    }
-//    dependencies {
-////        classpath(libs.hilt.android.gradle.plugin) // Hilt plugin
-//        classpath ("com.google.dagger:hilt-android-gradle-plugin:2.51.1")
-//
-//
-//    }
+    dependencies {
+
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+
+    }
 }

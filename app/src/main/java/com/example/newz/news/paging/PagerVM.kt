@@ -1,4 +1,4 @@
-package com.example.newz.paging
+package com.example.newz.news.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,8 +7,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.newz.models.Article
-import com.example.newz.network.NewsApiService
+import com.example.newz.news.models.Article
+import com.example.newz.news.network.NewsApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

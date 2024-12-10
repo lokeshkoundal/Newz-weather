@@ -1,4 +1,4 @@
-package com.example.newz.activities
+package com.example.newz.news.activities
 
 import android.os.Bundle
 import android.widget.ImageView

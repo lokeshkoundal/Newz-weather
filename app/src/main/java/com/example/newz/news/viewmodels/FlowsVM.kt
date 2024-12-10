@@ -1,4 +1,4 @@
-package com.example.newz.viewmodels
+package com.example.newz.news.viewmodels
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay

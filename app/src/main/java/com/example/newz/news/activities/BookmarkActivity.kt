@@ -1,4 +1,4 @@
-package com.example.newz.activities
+package com.example.newz.news.activities
 
 import android.os.Bundle
 import android.view.View
@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newz.R
-import com.example.newz.viewmodels.NewsVmDb
-import com.example.newz.adapter.BookmarkAdapter
+import com.example.newz.news.viewmodels.NewsVmDb
+import com.example.newz.news.adapter.BookmarkAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

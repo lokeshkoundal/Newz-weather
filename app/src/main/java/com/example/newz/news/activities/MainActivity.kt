@@ -1,4 +1,4 @@
-package com.example.newz.activities
+package com.example.newz.news.activities
 
 import android.content.Context
 import android.content.Intent
@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
-import com.example.newz.paging.NewzPagingSource
-import com.example.newz.paging.PagerVM
-import com.example.newz.paging.PagingAdapter
-import com.example.newz.viewmodels.NewsVmDb
+import com.example.newz.news.paging.NewzPagingSource
+import com.example.newz.news.paging.PagerVM
+import com.example.newz.news.paging.PagingAdapter
+import com.example.newz.news.viewmodels.NewsVmDb
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint

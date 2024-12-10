@@ -1,12 +1,12 @@
-package com.example.newz.paging
+package com.example.newz.news.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.newz.models.Article
-import com.example.newz.network.NewsApiService
+import com.example.newz.news.models.Article
+import com.example.newz.news.network.NewsApiService
 
-class NewzPagingSource(private val newsApiService: NewsApiService, private var category : String) : PagingSource<Int,Article>() {
+class NewzPagingSource(private val newsApiService: NewsApiService, private var category : String) : PagingSource<Int, Article>() {
 
     companion object{
         val isLoading = MutableLiveData(true)

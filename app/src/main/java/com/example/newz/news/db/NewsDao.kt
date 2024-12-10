@@ -1,4 +1,4 @@
-package com.example.newz.db
+package com.example.newz.news.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

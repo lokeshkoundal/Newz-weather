@@ -1,4 +1,4 @@
-package com.example.newz.adapter
+package com.example.newz.news.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
-import com.example.newz.activities.ReadMoreActivity
-import com.example.newz.db.News
-import com.example.newz.paging.PagingAdapter
-import com.example.newz.viewmodels.NewsVmDb
+import com.example.newz.news.activities.ReadMoreActivity
+import com.example.newz.news.db.News
+import com.example.newz.news.paging.PagingAdapter
+import com.example.newz.news.viewmodels.NewsVmDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

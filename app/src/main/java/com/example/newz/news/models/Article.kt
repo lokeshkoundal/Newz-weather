@@ -1,4 +1,4 @@
-package com.example.newz.models
+package com.example.newz.news.models
 
 data class Article(
     val author: String?,

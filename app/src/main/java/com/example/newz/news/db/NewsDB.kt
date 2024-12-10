@@ -1,4 +1,4 @@
-package com.example.newz.db
+package com.example.newz.news.db
 
 import android.content.Context
 import androidx.room.Database
@@ -16,7 +16,7 @@ abstract class NewsDB : RoomDatabase() {
 
                 fun getNewsDao(context: Context): NewsDao {
 
-                        if(INSTANCE==null) {
+                        if(INSTANCE ==null) {
                                 synchronized(this) {
                                         val instance = Room.databaseBuilder(
                                                 context.applicationContext,

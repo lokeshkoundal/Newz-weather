@@ -1,11 +1,11 @@
-package com.example.newz.viewmodels
+package com.example.newz.news.viewmodels
 
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newz.db.News
-import com.example.newz.db.NewsDao
+import com.example.newz.news.db.News
+import com.example.newz.news.db.NewsDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -8,6 +8,7 @@ import com.example.newz.RetrofitObj
 import com.example.newz.weather.db.WeatherDB
 import com.example.newz.weather.db.WeatherRoom
 import com.example.newz.weather.network.WeatherApiService
+import java.net.ConnectException
 import java.net.HttpRetryException
 
 //@HiltWorker
@@ -71,14 +72,20 @@ class WeatherWorker(appContext : Context, workerParams: WorkerParameters) : Coro
             Log.d("RoomDB", weatherDao.getWeatherData().toString())
 
             return Result.success()
-
-
-        }catch (e : HttpRetryException){
+        }
+        catch (e : HttpRetryException){
             Log.d("WeatherWorker Exception", e.message.toString())
             return Result.retry()
         }
-
+        catch (e : ConnectException){
+            Log.d("WeatherWorker Exception", e.message.toString())
+            return Result.retry()
+        }
         catch (e : Exception){
+            Log.d("WeatherWorker Exception", e.message.toString())
+            return Result.failure()
+        }
+        catch (e:NullPointerException){
             Log.d("WeatherWorker Exception", e.message.toString())
             return Result.failure()
         }

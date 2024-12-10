@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
-
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -18,11 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Newz"
         tools:targetApi="31">
+        <activity
+            android:name=".navigation.NavigationComponent"
+            android:exported="false" />
 
         <service
             android:name=".weather.WeatherWorker"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
 
         <activity
             android:name=".weather.activities.WeatherMainActivity"
@@ -37,16 +37,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.FlowsActivity"
+            android:name=".news.activities.FlowsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.BookmarkActivity"
+            android:name=".news.activities.BookmarkActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ReadMoreActivity"
+            android:name=".news.activities.ReadMoreActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".news.activities.MainActivity"
             android:exported="false" />
 
         <meta-data

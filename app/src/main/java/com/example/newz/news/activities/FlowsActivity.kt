@@ -1,4 +1,4 @@
-package com.example.newz.activities
+package com.example.newz.news.activities
 
 import android.os.Bundle
 import android.widget.Button
@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.newz.R
-import com.example.newz.viewmodels.FlowsVM
+import com.example.newz.news.viewmodels.FlowsVM
 import kotlinx.coroutines.launch
 
 class FlowsActivity : AppCompatActivity() {

@@ -1,9 +1,9 @@
 package com.example.newz
 
 import android.content.Context
-import com.example.newz.db.NewsDB
-import com.example.newz.db.NewsDao
-import com.example.newz.network.NewsApiService
+import com.example.newz.news.db.NewsDB
+import com.example.newz.news.db.NewsDao
+import com.example.newz.news.network.NewsApiService
 import com.example.newz.weather.db.WeatherDB
 import com.example.newz.weather.db.WeatherDao
 import com.example.newz.weather.network.WeatherApiService
