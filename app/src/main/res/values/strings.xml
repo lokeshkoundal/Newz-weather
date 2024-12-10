@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Newz</string>
-    <string name="taaza_khabarr">Short Newz</string>
+    <string name="app_name">NewsPulse</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="boomarked_news">Boomarked News</string>
@@ -10,11 +9,17 @@ One of Kotlin’s main attractions is its concise and expressive syntax. Unlike 
 
 Kotlin supports both object-oriented and functional programming paradigms, making it versatile for different coding styles. It introduces several powerful features, such as extension functions, which let you add new functions to existing classes without modifying their source code. This feature is helpful for making code more readable and modular. Additionally, Kotlin’s data classes make it easy to create classes that are primarily used to hold data, with built-in methods like toString(), equals(), and copy() provided automatically.\n\n
 
-For Android developers, Kotlin offers a streamlined development experience with features such as coroutines for asynchronous programming. Coroutines allow for writing asynchronous code that is easier to read and maintain compared to traditional callback-based approaches. This makes tasks like network calls, which can block the main thread in Android, more manageable and reduces the risk of application crashes due to thread management issues.\n\n
-
-Kotlin’s seamless interoperability with Java allows developers to gradually adopt Kotlin in existing Java projects. Kotlin code can call Java code and vice versa, allowing for a smooth migration without the need to rewrite entire projects. The compatibility extends to all Java libraries and frameworks, which can be directly used in Kotlin projects.
-
 In summary, Kotlin is a powerful, versatile language that offers significant advantages for modern development. Its expressive syntax, null safety, and support for asynchronous programming make it an attractive option for Android and JVM-based applications. Its growing ecosystem and strong community support suggest that Kotlin will continue to be a valuable tool for developers in years to come.</string>
+    <string name="general">General</string>
+    <string name="business">Business</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="health">Health</string>
+    <string name="science">Science</string>
+    <string name="sports">Sports</string>
+    <string name="saved_news">saved news</string>
+    <string name="select_the_category">Select the Category</string>
+    <string name="weather_image">weather_image</string>
+    <string name="news">News</string>
 
 
 </resources>

@@ -3,11 +3,16 @@
     <style name="Base.Theme.Newz" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+
     </style>
 
     <style name="Theme.Newz" parent="Base.Theme.Newz" />
 
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="backgroundTint">@drawable/chip_bg</item>
+        <item name="chipBackgroundColor">@drawable/chip_bg</item>
+        <item name="chipCornerRadius">6dp</item>
     </style>
 </resources>

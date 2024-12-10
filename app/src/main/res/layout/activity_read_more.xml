@@ -5,17 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:backgroundTint="#E0E0E0"
-    tools:context=".newz.ReadMoreActivity">
+    android:layout_margin="2dp"
+    android:padding="6dp"
+    tools:context=".activities.ReadMoreActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#E9F7FF"
         android:padding="4dp"
         app:cardCornerRadius="8dp"
+        android:background="#39BAF4"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,38 +26,69 @@
             android:id="@+id/titleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
+            android:fontFamily="@font/alike_angular"
+            android:background="#58CBFF"
             android:padding="4dp"
-            android:text="Bronny makes G League debut,'excited' to play - ESPN"
+            android:text="Bronny makes G League debut, 'excited' to play - ESPN"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/authorTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:layout_marginVertical="20dp"
+        android:text="jfsdhfguhfgkjfh"
+        app:layout_constraintEnd_toStartOf="@+id/dateTv"
+        app:layout_constraintStart_toStartOf="@+id/cardView2"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+    <TextView
+        android:id="@+id/dateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="18 Oct 2015"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/authorTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/authorTv" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/authorTv"
+        app:layout_constraintTop_toBottomOf="@+id/authorTv" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFED2"
         android:scrollbars="none"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
 
         <TextView
             android:id="@+id/contentTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="sans-serif"
             android:padding="8dp"
             android:text="@string/kt_para"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
 
     </ScrollView>
