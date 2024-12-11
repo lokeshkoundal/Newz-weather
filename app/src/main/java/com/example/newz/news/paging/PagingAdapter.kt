@@ -40,7 +40,7 @@ class PagingAdapter(private var context : Context, private var viewModel: NewsVm
         holder.bookmarkToggle.isSelected = hashmap[item?.title] == true
 
         holder.title.text = item?.title
-        holder.metaa.text = item?.publishedAt
+        holder.metaa.text = parseTimestampManually(item?.publishedAt?:"0")
         holder.description.text = item?.description
         holder.author.text = "~ " + item?.author
 
@@ -55,7 +55,7 @@ class PagingAdapter(private var context : Context, private var viewModel: NewsVm
             intent.putExtra("title", item?.title)
             intent.putExtra("content", item?.content)
             intent.putExtra("author", item?.author)
-            intent.putExtra("publishedAt", item?.publishedAt)
+            intent.putExtra("publishedAt", parseTimestampManually(item?.publishedAt?:"0"))
             intent.putExtra("image",item?.urlToImage)
             context.startActivity(intent)
         }

@@ -26,7 +26,7 @@ class SecondFragment : Fragment() {
         view.findViewById<TextView>(R.id.tv2).text = myNumber
 
         view.findViewById<TextView>(R.id.tv2).setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_secondFragment_to_firstFragment)
+            Navigation.findNavController(view).navigate(R.id.action_firstFragment_to_thirdFragment)
         }
 
         return view

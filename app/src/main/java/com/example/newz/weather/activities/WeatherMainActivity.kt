@@ -49,7 +49,7 @@ class WeatherMainActivity : AppCompatActivity() {
                 regionCountryTv.text = region + ", " + country
                 tempTv.text = temp_c.toString() + "\u2103"
                 weatherNameTv.text = condition_text
-                dateTv.text = last_updated
+                dateTv.text = parseTimestampManually(last_updated)
                 feelsLikeTv.text = feelslike_c.toString().plus("\u2103")
                 humidityTv.text = humidity.toString().plus("%")
                 windSpeedTv.text = wind_mph.toString().plus(" mph")
@@ -73,4 +73,28 @@ class WeatherMainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun parseTimestampManually(timestamp: String): String {
+        val (datePart, timePart) = timestamp.split(" ") // Split into date and time
+        val (year, month, day) = datePart.split("-").map { it.toInt() }
+        val (hour, minute) = timePart.split(":")
+        return "$day ${Months.entries[month-1]} $year, $hour:$minute"
+    }
+
+
+    enum class Months{
+        Jan,
+        Feb,
+        March,
+        April,
+        May,
+        June,
+        July,
+        Aug,
+        Sep,
+        Oct,
+        Nov,
+        Dec
+    }
+
 }
