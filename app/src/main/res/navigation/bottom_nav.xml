@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_firstFragment"
-            app:destination="@id/firstFragment" />
+            app:destination="@id/navigation2" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -25,56 +25,66 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
 
-    <fragment
-        android:id="@+id/fourthFragment"
-        android:name="com.example.newz.fourthFragment"
-        android:label="fragment_fourth"
-        tools:layout="@layout/fragment_fourth" >
+    <navigation android:id="@+id/navigation2"
+        app:startDestination="@id/firstFragment">
+        <fragment
+            android:id="@+id/fourthFragment"
+            android:name="com.example.newz.FourthFragment"
+            android:label="fragment_fourth"
+            tools:layout="@layout/fragment_fourth">
+            <action
+                android:id="@+id/action_fourthFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+            <action
+                android:id="@+id/action_fourthFragment_to_firstFragment"
+                app:destination="@id/firstFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/secondFragment"
+            android:name="com.example.newz.navigation.SecondFragment"
+            android:label="fragment_second"
+            tools:layout="@layout/fragment_second">
+
+            <argument
+                android:name="name"
+                android:defaultValue="lokesh"
+                app:argType="string" />
+            <action
+                android:id="@+id/action_secondFragment_to_fourthFragment"
+                app:destination="@id/fourthFragment" />
+            <action
+                android:id="@+id/action_secondFragment_to_thirdFragment"
+                app:destination="@id/thirdFragment" />
+
+
+        </fragment>
+        <fragment
+            android:id="@+id/thirdFragment"
+            android:name="com.example.newz.thirdFragment"
+            android:label="fragment_third"
+            tools:layout="@layout/fragment_third">
+
+            <action
+                android:id="@+id/action_thirdFragment_to_fourthFragment"
+                app:destination="@id/fourthFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/firstFragment"
+            android:name="com.example.newz.navigation.FirstFragment"
+            android:label="fragment_first"
+            tools:layout="@layout/fragment_first">
+
+            <action
+                android:id="@+id/action_firstFragment_to_secondFragment"
+                app:destination="@id/secondFragment" />
+            <action
+                android:id="@+id/action_firstFragment_to_thirdFragment"
+                app:destination="@id/thirdFragment" />
+        </fragment>
         <action
-            android:id="@+id/action_fourthFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/thirdFragment"
-        android:name="com.example.newz.thirdFragment"
-        android:label="fragment_third"
-        tools:layout="@layout/fragment_third">
-
-        <action
-            android:id="@+id/action_thirdFragment_to_fourthFragment2"
-            app:destination="@id/fourthFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/firstFragment"
-        android:name="com.example.newz.navigation.FirstFragment"
-        android:label="fragment_first"
-        tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_firstFragment_to_secondFragment2"
-            app:destination="@id/secondFragment" />
-        <action
-            android:id="@+id/action_firstFragment_to_thirdFragment2"
-            app:destination="@id/thirdFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/secondFragment"
-        android:name="com.example.newz.navigation.SecondFragment"
-        android:label="fragment_second"
-        tools:layout="@layout/fragment_second">
-
-        <argument
-            android:name="name"
-            android:defaultValue="lokesh"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_secondFragment_to_fourthFragment2"
-            app:destination="@id/fourthFragment" />
-
-
-    </fragment>
+            android:id="@+id/action_navigation2_pop2"
+            app:popUpTo="@id/navigation2"
+            app:popUpToInclusive="true" />
+    </navigation>
 
 </navigation>

@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 
 
 class HomeFragment : Fragment() {
@@ -18,11 +20,19 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
 
+        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
+
+        savedStateHandle?.getLiveData<String>("data")?.observe(viewLifecycleOwner){
+            view.findViewById<TextView>(R.id.textView3).text = it
+        }
+
+
         view.findViewById<Button>(R.id.btn).setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_firstFragment)
+            Navigation.findNavController(view).navigate(R.id.navigation2)
         }
 
         return view
     }
+
 
 }

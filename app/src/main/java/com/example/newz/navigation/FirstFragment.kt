@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.newz.R
@@ -20,8 +19,7 @@ class FirstFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_first, container, false)
 
         view.findViewById<Button>(R.id.button1).setOnClickListener {
-//            val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment()
-            val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment("this is the String")
+            val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment("Lokesh")
             Navigation.findNavController(view).navigate(action)
         }
 

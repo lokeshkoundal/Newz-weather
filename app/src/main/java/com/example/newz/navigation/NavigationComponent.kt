@@ -18,7 +18,17 @@ class NavigationComponent : AppCompatActivity() {
         val navController = navHostFragment.navController
         bottomNavigationView.setupWithNavController(navController)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
 
+                R.id.firstFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment).isChecked = true
+                R.id.secondFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment).isChecked = true
+                R.id.thirdFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment).isChecked = true
+                R.id.fourthFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment).isChecked = true
+                R.id.homeFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment).isChecked = true
+            }
+
+        }
 
 //        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 //        val navController = navHostFragment.navController

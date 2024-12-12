@@ -14,7 +14,7 @@
         android:gravity="center"
         android:text="2"
         android:textColor="@color/white"
-        android:textSize="120sp"
+        android:textSize="100sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,6 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv2" />
 
     <Button
+        android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="go to 4th fragment"
