@@ -11,6 +11,7 @@ interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeather(weatherRoom: WeatherRoom)
 
+
     @Query("SELECT * FROM weather_table")
-    fun getWeatherData() : LiveData<WeatherRoom>
+    fun getAllWeatherData() : LiveData<List<WeatherRoom>>
 }

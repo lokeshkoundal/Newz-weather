@@ -1,4 +1,4 @@
-package com.example.newz
+package com.example.newz.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-
+import com.example.newz.R
 
 class HomeFragment : Fragment() {
 

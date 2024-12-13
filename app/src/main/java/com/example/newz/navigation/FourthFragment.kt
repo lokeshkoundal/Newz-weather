@@ -1,4 +1,4 @@
-package com.example.newz
+package com.example.newz.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.example.newz.R
 
 
 class FourthFragment : Fragment() {
@@ -28,7 +29,8 @@ class FourthFragment : Fragment() {
             val data = view.findViewById<EditText>(R.id.editText).text
             savedStateHandle.set("data", data.toString())
 
-            navController.navigate(R.id.homeFragment,null, NavOptions.Builder()
+            navController.navigate(
+                R.id.homeFragment,null, NavOptions.Builder()
                 .setLaunchSingleTop(true)
                 .setPopUpTo(R.id.homeFragment,false)
                 .build())

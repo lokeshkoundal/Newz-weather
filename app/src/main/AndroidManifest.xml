@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Newz"
         tools:targetApi="31">
         <activity
+            android:name=".weather.activities.WeatherMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".navigation.NavigationComponent"
             android:exported="false" />
 
@@ -24,9 +27,6 @@
             android:name=".weather.WeatherWorker"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity
-            android:name=".weather.activities.WeatherMainActivity"
-            android:exported="false" />
         <activity
             android:name=".NavigationActivity"
             android:exported="true">

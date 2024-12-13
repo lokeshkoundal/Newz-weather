@@ -46,14 +46,13 @@ class MainActivity : AppCompatActivity() {
     private  val viewModelRoom: NewsVmDb by viewModels()
 //    lateinit var adapter: NewsAdapter
 
-
     private lateinit var pagingAdapter : PagingAdapter
     private val pagingVM : PagerVM by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         loader = findViewById(R.id.loader)
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
         bookmarkBtn = findViewById(R.id.bookMarkBtn)

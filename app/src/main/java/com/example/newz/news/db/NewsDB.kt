@@ -14,6 +14,7 @@ abstract class NewsDB : RoomDatabase() {
                 @Volatile
                 private var INSTANCE: NewsDB? = null
 
+
                 fun getNewsDao(context: Context): NewsDao {
 
                         if(INSTANCE ==null) {

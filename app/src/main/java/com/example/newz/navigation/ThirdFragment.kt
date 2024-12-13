@@ -1,4 +1,4 @@
-package com.example.newz
+package com.example.newz.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.example.newz.R
 
-
-class thirdFragment : Fragment() {
+class ThirdFragment : Fragment() {
 
 
     override fun onCreateView(

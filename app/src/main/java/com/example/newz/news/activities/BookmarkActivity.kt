@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newz.R
-import com.example.newz.news.viewmodels.NewsVmDb
 import com.example.newz.news.adapter.BookmarkAdapter
+import com.example.newz.news.viewmodels.NewsVmDb
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +24,8 @@ class BookmarkActivity : AppCompatActivity() {
         setContentView(R.layout.activity_bookmark)
         image = findViewById(R.id.imageView)
         textView = findViewById(R.id.textView)
+
+
 
 //        val viewModel = ViewModelProvider(this)[NewsVmDb::class.java]
         viewModel.getAllBookmarkedNews()

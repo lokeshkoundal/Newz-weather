@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.newz.HomeFragment"
+        android:name="com.example.newz.navigation.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.newz.ProfileFragment"
+        android:name="com.example.newz.navigation.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.example.newz.SettingFragment"
+        android:name="com.example.newz.navigation.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
 
@@ -29,7 +29,7 @@
         app:startDestination="@id/firstFragment">
         <fragment
             android:id="@+id/fourthFragment"
-            android:name="com.example.newz.FourthFragment"
+            android:name="com.example.newz.navigation.FourthFragment"
             android:label="fragment_fourth"
             tools:layout="@layout/fragment_fourth">
             <action
@@ -60,7 +60,7 @@
         </fragment>
         <fragment
             android:id="@+id/thirdFragment"
-            android:name="com.example.newz.thirdFragment"
+            android:name="com.example.newz.navigation.ThirdFragment"
             android:label="fragment_third"
             tools:layout="@layout/fragment_third">
 

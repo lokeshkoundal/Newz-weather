@@ -5,6 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="fontFamily">@font/poppins</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:statusBarColor">#676767</item>
+        <item name="android:textColor">#fff</item>
+
 
     </style>
 </resources>

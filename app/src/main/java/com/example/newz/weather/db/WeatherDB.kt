@@ -31,7 +31,6 @@ abstract class WeatherDB() : RoomDatabase() {
             }
             else{
                 return INSTANCE!!.weatherDao()
-
             }
         }
     }

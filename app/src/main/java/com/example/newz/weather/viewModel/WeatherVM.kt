@@ -8,7 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class WeatherVM @Inject constructor(private val weatherDao : WeatherDao ) :ViewModel() {
+class WeatherVM @Inject constructor(weatherDao : WeatherDao ) :ViewModel() {
 
-    var weatherData  : LiveData<WeatherRoom> = weatherDao.getWeatherData()
+//    var weatherData  : LiveData<WeatherRoom> = weatherDao.getWeatherData()
+
+    var weatherList : LiveData<List<WeatherRoom>> = weatherDao.getAllWeatherData()
 }
