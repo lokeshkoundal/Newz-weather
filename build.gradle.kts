@@ -7,8 +7,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin") version "2.8.4" apply false
 
 
-
-
 }
 buildscript {
 //    repositories {
