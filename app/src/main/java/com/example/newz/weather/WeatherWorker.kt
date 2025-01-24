@@ -44,12 +44,12 @@ class WeatherWorker(appContext : Context, workerParams: WorkerParameters) : Coro
 
 
                     val weatherDataForDB = WeatherRoom(
-                        name = cityName!!,
-                        region = region!!,
-                        country = country!!,
-                        last_updated = last_updated!!,
-                        temp_c = temp_c!!,
-                        wind_mph = wind_mph!!,
+                        name = cityName?:"",
+                        region = region?:"",
+                        country = country?:"",
+                        last_updated = last_updated?:"",
+                        temp_c = temp_c?:0.0,
+                        wind_mph = wind_mph?:0.0,
                         humidity = humidity!!,
                         icon_url = icon!!,
                         precip_mm = precip_mm!!,

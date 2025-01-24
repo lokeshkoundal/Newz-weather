@@ -16,9 +16,9 @@
         android:fontFamily="@font/alike_angular"
         android:gravity="center"
         android:layout_margin="6dp"
-        android:text="Bookmarked News"
+        android:text="@string/bookmarked_news"
         android:textColor="@color/black"
-        android:textSize="32dp"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,9 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/alike_angular"
-        android:text="No bookmarked news Found!!"
+        android:text="@string/no_bookmarked_news_found"
         android:gravity="center"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />

@@ -25,7 +25,8 @@
 
         <service
             android:name=".weather.WeatherWorker"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            tools:ignore="Instantiatable" />
 
         <activity
             android:name=".NavigationActivity"

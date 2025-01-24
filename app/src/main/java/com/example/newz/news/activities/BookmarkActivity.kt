@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newz.R
+import com.example.newz.databinding.ActivityBookmarkBinding
 import com.example.newz.news.adapter.BookmarkAdapter
 import com.example.newz.news.viewmodels.NewsVmDb
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,16 +18,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class BookmarkActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private val viewModel: NewsVmDb by viewModels()
-    private lateinit var image : ImageView
-    private lateinit var textView : TextView
+
+    private lateinit var binding :ActivityBookmarkBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bookmark)
-        image = findViewById(R.id.imageView)
-        textView = findViewById(R.id.textView)
+        binding = ActivityBookmarkBinding.inflate(layoutInflater)
 
-
-
+        setContentView(binding.root)
 //        val viewModel = ViewModelProvider(this)[NewsVmDb::class.java]
         viewModel.getAllBookmarkedNews()
         recyclerView = findViewById(R.id.recyclerView)
@@ -36,16 +34,16 @@ class BookmarkActivity : AppCompatActivity() {
         viewModel.allNews.observe(this){
             if(it.isEmpty()){
                recyclerView.visibility = View.GONE
-                image.visibility = View.VISIBLE
-                textView.visibility = View.VISIBLE
+                binding.imageView.visibility = View.VISIBLE
+                binding.textView.visibility = View.VISIBLE
             }
             else{
                 recyclerView.visibility = View.VISIBLE
                 val adapter = BookmarkAdapter(it, this,viewModel)
                 recyclerView.adapter = adapter
 
-                image.visibility = View.GONE
-                textView.visibility = View.GONE
+                binding.imageView.visibility = View.GONE
+                binding.textView.visibility = View.GONE
             }
 
         }

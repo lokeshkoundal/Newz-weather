@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newz.R
+import com.example.newz.databinding.ActivityMainBinding
 import com.example.newz.news.paging.NewzPagingSource
 import com.example.newz.news.paging.PagerVM
 import com.example.newz.news.paging.PagingAdapter
@@ -35,12 +36,7 @@ private const val CATEGORY_ENTERTAINMENT = "entertainment"
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var bookmarkBtn: FloatingActionButton
-    private lateinit var chipGroup: ChipGroup
-//    private  var newsData: NewsModel? = null
-    private lateinit var loader: ProgressBar
-    private lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var binding :ActivityMainBinding
 
 //    private  val vm: NewsVM by viewModels()
     private  val viewModelRoom: NewsVmDb by viewModels()
@@ -51,41 +47,32 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        loader = findViewById(R.id.loader)
-        refreshLayout = findViewById(R.id.swipeRefreshLayout)
-        bookmarkBtn = findViewById(R.id.bookMarkBtn)
-        chipGroup = findViewById(R.id.chipGroup)
-
-
-        recyclerView = findViewById(R.id.recyclerView)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         pagingAdapter = PagingAdapter(this,viewModelRoom)
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = pagingAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = pagingAdapter
 
-        chipGroup.getChildAt(0).performClick()
+        binding.chipGroup.getChildAt(0).performClick()
 
 
-        refreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             if (!isInternetAvailable(this)) {
                 showNoInternetDialog(this)
-                refreshLayout.isRefreshing = false
+                binding.swipeRefreshLayout.isRefreshing = false
 
             } else {
                 lifecycleScope.launch {
-
-
                     if(pagingAdapter.itemCount>0){
                         pagingAdapter.refresh()
                     }
 
                    else{
-                       chipGroup.getChildAt(0).performClick()
+                        binding.chipGroup.getChildAt(0).performClick()
                     }
-                    refreshLayout.isRefreshing = false
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
             }
 
@@ -101,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     pagingVM.getHeadLines().collectLatest {
                         pagingAdapter.submitData(it)
-                        recyclerView.scrollToPosition(0)
+                        binding.recyclerView.scrollToPosition(0)
 //                        pagingAdapter.notifyDataSetChanged()
                     }
                 }
@@ -113,16 +100,16 @@ class MainActivity : AppCompatActivity() {
 
         NewzPagingSource.isLoading.observe(this) { isLoading ->
             if (isLoading) {
-                loader.visibility = View.VISIBLE
+                binding.loader.visibility = View.VISIBLE
             } else {
-                loader.visibility = View.GONE
+                binding.loader.visibility = View.GONE
             }
         }
 
 //        --------------------------------------------------------
 
 
-        chipGroup.getChildAt(0).setOnClickListener {
+        binding.chipGroup.getChildAt(0).setOnClickListener {
             if (pagingVM.category.value != CATEGORY_GENERAL) {
 
                 if (!isInternetAvailable(this)) {
@@ -133,11 +120,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             else{
-                recyclerView.smoothScrollToPosition(0)
+                binding.recyclerView.smoothScrollToPosition(0)
             }
         }
 
-        chipGroup.getChildAt(1).setOnClickListener {
+        binding.chipGroup.getChildAt(1).setOnClickListener {
             if (pagingVM.category.value != CATEGORY_BUSINESS) {
 
                 if (!isInternetAvailable(this)) {
@@ -146,11 +133,11 @@ class MainActivity : AppCompatActivity() {
                     pagingVM.category.value = CATEGORY_BUSINESS
                 }
             } else {
-                recyclerView.smoothScrollToPosition(0)
+                binding.recyclerView.smoothScrollToPosition(0)
             }
         }
 
-        chipGroup.getChildAt(2).setOnClickListener {
+        binding.chipGroup.getChildAt(2).setOnClickListener {
         if (pagingVM.category.value != CATEGORY_ENTERTAINMENT) {
 
             if (!isInternetAvailable(this)) {
@@ -160,11 +147,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         else{
-            recyclerView.smoothScrollToPosition(0)
+            binding.recyclerView.smoothScrollToPosition(0)
         }
         }
 
-        chipGroup.getChildAt(3).setOnClickListener {
+        binding.chipGroup.getChildAt(3).setOnClickListener {
             if (pagingVM.category.value != CATEGORY_HEALTH) {
 
                 if (!isInternetAvailable(this)) {
@@ -175,11 +162,11 @@ class MainActivity : AppCompatActivity() {
 
             }
             else{
-                recyclerView.smoothScrollToPosition(0)
+                binding.recyclerView.smoothScrollToPosition(0)
 
             }
         }
-        chipGroup.getChildAt(4).setOnClickListener {
+        binding.chipGroup.getChildAt(4).setOnClickListener {
             if (pagingVM.category.value != CATEGORY_SCIENCE) {
 
                 if (!isInternetAvailable(this)) {
@@ -190,11 +177,11 @@ class MainActivity : AppCompatActivity() {
 
             }
             else{
-                recyclerView.smoothScrollToPosition(0)
+                binding.recyclerView.smoothScrollToPosition(0)
 
             }
         }
-        chipGroup.getChildAt(5).setOnClickListener {
+        binding.chipGroup.getChildAt(5).setOnClickListener {
             if (pagingVM.category.value != CATEGORY_SPORTS) {
 
                 if (!isInternetAvailable(this)) {
@@ -205,7 +192,7 @@ class MainActivity : AppCompatActivity() {
 
             }
             else{
-                recyclerView.smoothScrollToPosition(0)
+                binding.recyclerView.smoothScrollToPosition(0)
 
             }
         }
@@ -378,7 +365,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        bookmarkBtn.setOnClickListener {
+        binding.bookMarkBtn.setOnClickListener {
             val intent = Intent(this, BookmarkActivity::class.java)
             startActivity(intent)
 //            val intent = Intent(this, FlowsActivity::class.java)
