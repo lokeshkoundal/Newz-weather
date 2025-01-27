@@ -410,9 +410,10 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("No Internet Connection")
         builder.setMessage("Please check your internet connection and try again.")
-        builder.setCancelable(true)
+        builder.setCancelable(false)
         builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss() // Close the dialog when the user presses OK
+            dialog.dismiss()
+            finish()
         }
         builder.setPositiveButtonIcon(AppCompatResources.getDrawable(this,R.drawable.baseline_check_24))
         val dialog = builder.create()

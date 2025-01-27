@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
+import com.example.newz.Utils
 import com.example.newz.news.activities.ReadMoreActivity
 import com.example.newz.news.db.News
 import com.example.newz.news.models.Article
@@ -40,7 +41,7 @@ class PagingAdapter(private var context : Context, private var viewModel: NewsVm
         holder.bookmarkToggle.isSelected = hashmap[item?.title] == true
 
         holder.title.text = item?.title
-        holder.metaa.text = parseTimestampManually(item?.publishedAt?:"0")
+        holder.metaa.text = Utils.parseTimestampManually(item?.publishedAt?:"0")
         holder.description.text = item?.description
         holder.author.text = "~ " + item?.author
 
@@ -52,11 +53,11 @@ class PagingAdapter(private var context : Context, private var viewModel: NewsVm
 
         holder.readMore.setOnClickListener {
             val intent = Intent(context, ReadMoreActivity::class.java)
-            intent.putExtra("title", item?.title)
-            intent.putExtra("content", item?.content)
-            intent.putExtra("author", item?.author)
-            intent.putExtra("publishedAt", parseTimestampManually(item?.publishedAt?:"0"))
-            intent.putExtra("image",item?.urlToImage)
+            intent.putExtra("title", item?.title?:"")
+            intent.putExtra("content", item?.content?:"")
+            intent.putExtra("author", item?.author?:"")
+            intent.putExtra("publishedAt", Utils.parseTimestampManually(item?.publishedAt?:"0"))
+            intent.putExtra("image",item?.urlToImage?:"")
             context.startActivity(intent)
         }
 
@@ -66,7 +67,7 @@ class PagingAdapter(private var context : Context, private var viewModel: NewsVm
             if(!it.isSelected){
                 news = item?.let { it1 ->
                     News(null,it1.author?:"",
-                        it1.content?:"",it1.description,it1.publishedAt,it1.source.toString(),it1.title,it1.url,it1.urlToImage)
+                        it1.content?:"",it1.description,Utils.parseTimestampManually(it1.publishedAt),it1.source.toString(),it1.title,it1.url,it1.urlToImage)
                 }
 
                 if (news != null) {
@@ -112,30 +113,6 @@ class PagingAdapter(private var context : Context, private var viewModel: NewsVm
 
         }
     }
-
-
-    fun parseTimestampManually(timestamp: String): String {
-        // Remove the "Z" (UTC indicator) and split the timestamp into date and time
-        val dateTimeString = timestamp.removeSuffix("Z") // Remove 'Z'
-        val (datePart, timePart) = dateTimeString.split("T") // Split into date and time
-
-        // Split the date and time into individual components
-        val (year, month, day) = datePart.split("-").map { it.toInt() }
-        val (hour, minute, second) = timePart.split(":").map { it.toInt() }
-
-        // Create a Calendar instance to work with the date and time
-        val calendar = Calendar.getInstance().apply {
-            set(year, month - 1, day, hour, minute, second) // Calendar months are 0-indexed
-            set(Calendar.MILLISECOND, 0)
-            timeZone = TimeZone.getTimeZone("UTC") // Set to UTC
-        }
-
-        // Format the date into a more readable string (e.g., "08 Dec 2024, 04:24 AM")
-        val formatter = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())
-        formatter.timeZone = TimeZone.getDefault() // Convert to local time zone
-        return formatter.format(calendar.time)
-    }
-
 
     inner class PagingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val imageView : ImageView = itemView.findViewById(R.id.articleImage)

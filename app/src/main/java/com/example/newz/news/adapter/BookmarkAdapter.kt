@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newz.R
+import com.example.newz.databinding.ArticleRvBinding
 import com.example.newz.news.activities.ReadMoreActivity
 import com.example.newz.news.db.News
 import com.example.newz.news.paging.PagingAdapter
@@ -23,30 +24,28 @@ class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Conte
         parent: ViewGroup,
         viewType: Int
     ): BookmarkViewHolder {
-        val view : View = LayoutInflater.from(parent.context).inflate(R.layout.article_rv, parent, false)
-        return BookmarkViewHolder(view)
+//        val view : View = LayoutInflater.from(parent.context).inflate(R.layout.article_rv, parent, false)
+//        return BookmarkViewHolder(view)
+
+        val binding = ArticleRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return BookmarkViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
 
-        holder.bookmarkToggle.isSelected = true
+        holder.binding.bookmark.isSelected = true
 
-        val currentItem = bookmarkedNews[position]
+        val currentItem =  bookmarkedNews[position]
+        holder.binding.bookMarkedNews = bookmarkedNews[position]
 
-            holder.title.text = currentItem.title
-            holder.metaa.text = currentItem.publishedAt
-            holder.description.text = currentItem.description
-            holder.author.text = "~ " + currentItem.author
-
-            Glide.with(context) // or use 'this' if inside an Activity, 'requireContext()' in a Fragment
-                .load(currentItem.urlToImage)
+        Glide.with(context) // or use 'this' if inside an Activity, 'requireContext()' in a Fragment
+                .load(bookmarkedNews[position].urlToImage)
                 .placeholder(R.drawable.baseline_replay_24) // Optional: add a placeholder while loading
                 .error(R.drawable.ic_error) // Optional: add an error image in case of failure
-                .into(holder.imageView)
+                .into(holder.binding.articleImage)
 
 
-
-        holder.bookmarkToggle.setOnClickListener {
+        holder.binding.bookmark.setOnClickListener {
 
             val news = currentItem.let { it1 ->
                 News(null,it1.author,
@@ -72,8 +71,8 @@ class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Conte
             }
         }
 
-        holder.readMore.setOnClickListener(){
-            val intent: Intent = Intent(context, ReadMoreActivity::class.java)
+        holder.binding.readMoreButton.setOnClickListener(){
+            val intent = Intent(context, ReadMoreActivity::class.java)
             intent.putExtra("title", currentItem.title)
             intent.putExtra("content", currentItem.content)
             intent.putExtra("author", currentItem.author)
@@ -87,14 +86,5 @@ class BookmarkAdapter(private var bookmarkedNews: List<News>, val context: Conte
         return bookmarkedNews.size
     }
 
-    inner class BookmarkViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView : ImageView = itemView.findViewById(R.id.articleImage)
-        val title : TextView = itemView.findViewById(R.id.articleTitle)
-        val metaa : TextView = itemView.findViewById(R.id.articleMeta)
-        val description : TextView = itemView.findViewById(R.id.articleDescription)
-        val readMore : TextView = itemView.findViewById(R.id.readMoreButton)
-        val author : TextView = itemView.findViewById(R.id.author)
-        val bookmarkToggle: ImageView = itemView.findViewById(R.id.bookmark)
-
-    }
+    inner class BookmarkViewHolder(val binding: ArticleRvBinding) : RecyclerView.ViewHolder(binding.root)
 }

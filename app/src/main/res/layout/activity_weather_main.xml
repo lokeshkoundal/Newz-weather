@@ -1,197 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".weather.activities.WeatherMainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/bg_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_night"
-        android:scaleType="centerCrop"/>
+    <data>
+            <variable
+                name="weatherData"
+                type="com.example.newz.weather.db.WeatherRoom" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp">
+        tools:context=".weather.activities.WeatherMainActivity">
 
-    <TextView
-        android:id="@+id/cityTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gurgaon"
-        android:textSize="26sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/region_countryTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="haryana, India"
-        android:includeFontPadding="false"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/cityTv"
-        app:layout_constraintTop_toBottomOf="@+id/cityTv" />
-
-    <ImageView
-        android:id="@+id/weatherImage"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:contentDescription="@string/weather_image"
-        android:src="@drawable/ic_cloud_sun"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/region_countryTv" />
-
-
-    <TextView
-        android:id="@+id/tempTv"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="21\u2103"
-        android:textSize="70sp"
-        android:includeFontPadding="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weatherImage" />
-
-    <TextView
-        android:id="@+id/weatherNameTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Cloudy"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="@+id/tempTv"
-        app:layout_constraintStart_toStartOf="@+id/tempTv"
-        app:layout_constraintTop_toBottomOf="@+id/tempTv" />
-
-    <TextView
-        android:id="@+id/dateTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Friday 18 * 09:41am"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/weatherNameTv"
-        app:layout_constraintStart_toStartOf="@+id/weatherNameTv"
-        app:layout_constraintTop_toBottomOf="@+id/weatherNameTv" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <ImageView
+            android:id="@+id/bg_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTv">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Feels Like"
-                android:textColor="#D2D2D2"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/feelsLikeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="23"
-                android:textSize="26sp"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Humidity"
-                android:textColor="#D2D2D2"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/humidityTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="23%"
-                android:textSize="26sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/materialDivider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_night"
+            android:scaleType="centerCrop" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialDivider">
+            android:layout_height="match_parent"
+            android:padding="12dp">
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/cityTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wind mph"
-                android:textColor="#D2D2D2"
-                android:textSize="20sp"
+                android:text="@{weatherData.name}"
+                android:textSize="26sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/windSpeedTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="23"
-                android:textSize="26sp"
-                app:layout_constraintStart_toStartOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/region_countryTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Precipitation"
-                android:textColor="#D2D2D2"
-                android:textSize="20sp"
+                android:text="@{weatherData.region+`, `+weatherData.country}"
+                android:includeFontPadding="false"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/cityTv"
+                app:layout_constraintTop_toBottomOf="@+id/cityTv" />
+
+            <ImageView
+                android:id="@+id/weatherImage"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/weather_image"
+                android:src="@drawable/ic_cloud_sun"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/region_countryTv" />
+
 
             <TextView
-                android:id="@+id/precipitationTv"
+                android:id="@+id/tempTv"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@{String.valueOf(weatherData.temp_c)+'\u2103'}"
+                android:textSize="70sp"
+                android:includeFontPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weatherImage" />
+
+            <TextView
+                android:id="@+id/weatherNameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="23"
-                android:textSize="26sp"
+                android:fontFamily="monospace"
+                android:text="@{weatherData.condition_text}"
+                android:textSize="28sp"
+                app:layout_constraintEnd_toEndOf="@+id/tempTv"
+                app:layout_constraintStart_toStartOf="@+id/tempTv"
+                app:layout_constraintTop_toBottomOf="@+id/tempTv" />
+
+            <TextView
+                android:id="@+id/dateTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Friday 18 * 09:41am"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/weatherNameTv"
+                app:layout_constraintStart_toStartOf="@+id/weatherNameTv"
+                app:layout_constraintTop_toBottomOf="@+id/weatherNameTv" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateTv">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Feels Like"
+                    android:textColor="#D2D2D2"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/feelsLikeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(weatherData.feelslike_c)}"
+                    android:textSize="26sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView6"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Humidity"
+                    android:textColor="#D2D2D2"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/humidityTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(weatherData.humidity)+'%'}"
+                    android:textSize="26sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialDivider">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wind mph"
+                    android:textColor="#D2D2D2"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/windSpeedTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(weatherData.wind_mph)+`mph`}"
+                    android:textSize="26sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView12"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Precipitation"
+                    android:textColor="#D2D2D2"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/precipitationTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(weatherData.precip_mm)+`mm`}"
+                    android:textSize="26sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

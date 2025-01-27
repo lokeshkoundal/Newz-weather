@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newz.R
@@ -22,10 +23,12 @@ class BookmarkActivity : AppCompatActivity() {
     private lateinit var binding :ActivityBookmarkBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityBookmarkBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
 //        val viewModel = ViewModelProvider(this)[NewsVmDb::class.java]
+
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_bookmark)
+        binding.bookMarkTitle = getString(R.string.bookmarked_news)
+        binding.noBookmarkedNews = getString(R.string.no_bookmarked_news_found)
+
         viewModel.getAllBookmarkedNews()
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -33,7 +36,7 @@ class BookmarkActivity : AppCompatActivity() {
 
         viewModel.allNews.observe(this){
             if(it.isEmpty()){
-               recyclerView.visibility = View.GONE
+                recyclerView.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 binding.textView.visibility = View.VISIBLE
             }
@@ -41,7 +44,6 @@ class BookmarkActivity : AppCompatActivity() {
                 recyclerView.visibility = View.VISIBLE
                 val adapter = BookmarkAdapter(it, this,viewModel)
                 recyclerView.adapter = adapter
-
                 binding.imageView.visibility = View.GONE
                 binding.textView.visibility = View.GONE
             }

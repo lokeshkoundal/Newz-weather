@@ -29,33 +29,33 @@ class WeatherWorker(appContext : Context, workerParams: WorkerParameters) : Coro
             cities.forEach {
                     val weatherData = weatherApiService.getWeatherData(it).body()
 
-                    val temp_c = weatherData?.current?.temp_c
-                    val wind_mph = weatherData?.current?.wind_mph
+                    val tempC = weatherData?.current?.temp_c
+                    val windMph = weatherData?.current?.wind_mph
                     val humidity = weatherData?.current?.humidity
-                    val condition_text = weatherData?.current?.condition?.text
-                    val last_updated = weatherData?.current?.last_updated
+                    val conditionText = weatherData?.current?.condition?.text
+                    val lastUpdated = weatherData?.current?.last_updated
                     val cityName = weatherData?.location?.name
                     val region = weatherData?.location?.region
                     val country = weatherData?.location?.country
                     val icon = weatherData?.current?.condition?.icon
-                    val feelslike_c = weatherData?.current?.feelslike_c
-                    val is_day = weatherData?.current?.is_day
-                    val precip_mm = weatherData?.current?.precip_mm
+                    val feelslikeC = weatherData?.current?.feelslike_c
+                    val isDay = weatherData?.current?.is_day
+                    val precipMM = weatherData?.current?.precip_mm
 
 
                     val weatherDataForDB = WeatherRoom(
                         name = cityName?:"",
                         region = region?:"",
                         country = country?:"",
-                        last_updated = last_updated?:"",
-                        temp_c = temp_c?:0.0,
-                        wind_mph = wind_mph?:0.0,
+                        last_updated = lastUpdated?:"",
+                        temp_c = tempC?:0.0,
+                        wind_mph = windMph?:0.0,
                         humidity = humidity!!,
                         icon_url = icon!!,
-                        precip_mm = precip_mm!!,
-                        is_day = is_day!!,
-                        condition_text = condition_text!!,
-                        feelslike_c = feelslike_c!!
+                        precip_mm = precipMM!!,
+                        is_day = isDay!!,
+                        condition_text = conditionText!!,
+                        feelslike_c = feelslikeC!!
                     )
 
                     weatherDao.insertWeather(weatherDataForDB)

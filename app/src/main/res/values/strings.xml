@@ -22,6 +22,9 @@ In summary, Kotlin is a powerful, versatile language that offers significant adv
     <string name="news">News</string>
     <string name="no_bookmarked_news_found">No bookmarked news Found!!</string>
     <string name="bookmarked_news">Bookmarked News</string>
+    <string name="image">image</string>
+    <string name="read_more">Read More</string>
+    <string name="bookmark_toggle_img">bookmark toggle img</string>
 
 
 </resources>
